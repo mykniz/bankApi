@@ -34,7 +34,8 @@ public class AccountHandler implements HttpHandler {
             for (Account account : accountList) {
                 ObjectNode objectNode = objectMapper.createObjectNode();
                 objectNode.put("account", account.getAccount());
-                objectNode.put("balance", account.isOpen());
+                objectNode.put("balance", account.getBalance());
+                objectNode.put("isOpen", account.isOpen());
                 arrayNode.add(objectNode);
             }
         } catch (SQLException sqlException) {

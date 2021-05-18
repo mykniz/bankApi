@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class DatabaseConfig {
 
     private final static String PROPERTIES_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/db.properties";
-    private final static String SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/user.sql";
+    private final static String SQL_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/user.sql";
     private static final Logger log = Logger.getLogger(DatabaseConfig.class.getName());
 
     public static Connection getConnection() throws FileNotFoundException, SQLException {
@@ -37,7 +37,11 @@ public class DatabaseConfig {
         return connection;
     }
 
-    public static void createDatabase(Connection connection) throws SQLException, FileNotFoundException {
-        RunScript.execute(connection, new FileReader(SCRIPT_PATH));
+    public static void createDatabase() {
+        try( Connection connection = DatabaseConfig.getConnection()) {
+            RunScript.execute(connection, new FileReader(SQL_SCRIPT_PATH));
+        } catch (SQLException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

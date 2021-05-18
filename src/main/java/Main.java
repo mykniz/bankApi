@@ -13,11 +13,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SQLException {
 
-        Connection connection = DatabaseConfig.getConnection();
-        DatabaseConfig.createDatabase(connection);
-        UserDao userDao = new UserDaoImpl(connection);
-        AccountDao accountDao = new AccountDaoImpl(connection);
-        CardDao cardDao = new CardDaoImpl(connection);
+        DatabaseConfig.createDatabase();
+
+        UserDao userDao = new UserDaoImpl();
+        AccountDao accountDao = new AccountDaoImpl();
+        CardDao cardDao = new CardDaoImpl();
 
         UserService userService = new UserService(userDao);
         AccountService accountService = new AccountService(accountDao);

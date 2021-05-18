@@ -1,5 +1,6 @@
 package dao;
 
+import dto.UserDto;
 import entity.User;
 
 import java.io.FileNotFoundException;
@@ -10,4 +11,6 @@ public interface UserDao extends CrudDao<User> {
 
     @Override
     List<User> findAll() throws SQLException, FileNotFoundException;
+
+    List<UserDto> findUsersBankInfo();
 }

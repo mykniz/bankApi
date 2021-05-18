@@ -1,6 +1,9 @@
 package dao;
 
 import config.DatabaseConfig;
+import dto.UserDto;
+import entity.CardType;
+import entity.PaySystem;
 import entity.User;
 
 import java.io.FileNotFoundException;
@@ -11,13 +14,11 @@ import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
 
-    private final static String SQL_FIND_ALL = "SELECT * FROM USER";
-
-    private final Connection connection;
-
-    public UserDaoImpl(Connection connection) {
-        this.connection = connection;
-    }
+    private final static String SQL_FIND_ALL_USERS = "SELECT * FROM USER";
+    private final static String SQL_FIND_USERS_BANK_INFO =
+            "select U.FIRST_NAME, U.LAST_NAME, A.BALANCE, C.NUMBER, C.CARD_TYPE, C.PAY_SYSTEM FROM CARD AS C" +
+                    "         JOIN ACCOUNT A on A.ACCOUNT_ID = C.ACCOUNT_ID" +
+                    "         join USER U on U.USER_ID = A.USER_ID;";
 
 
     @Override
@@ -41,19 +42,41 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findAll() throws SQLException, FileNotFoundException {
+    public List<User> findAll() {
         List<User> listOfUsers = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL);
+        try (Connection connection = DatabaseConfig.getConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL_USERS);
             while (resultSet.next()) {
                 listOfUsers.add(new User(resultSet.getString(2), resultSet.getString(3)));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
         }
         return listOfUsers;
     }
 
+    @Override
+    public List<UserDto> findUsersBankInfo() {
+
+        List<UserDto> listOfUsers = new ArrayList<>();
+        try (Connection connection = DatabaseConfig.getConnection();
+             Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(SQL_FIND_USERS_BANK_INFO);
+            while (resultSet.next()) {
+                listOfUsers.add(new UserDto(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getBigDecimal(3),
+                        resultSet.getString(4),
+                        CardType.valueOf(resultSet.getString(5)),
+                        PaySystem.valueOf(resultSet.getString(6))));
+            }
+        } catch (SQLException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return listOfUsers;
+    }
 
 
 }

@@ -1,22 +1,18 @@
-package entity;
+package dto;
 
-public class Card {
-    private final String cardNumber;
+import entity.CardType;
+import entity.PaySystem;
+
+public class CardDto {
+
     private final CardType cardType;
     private final PaySystem paySystem;
-    private final boolean isActive;
     private final int accountId;
 
-    public Card(String cardNumber, CardType cardType, PaySystem paySystem, boolean isActive, int accountId) {
-        this.cardNumber = cardNumber;
+    public CardDto(CardType cardType, PaySystem paySystem, int accountId) {
         this.cardType = cardType;
         this.paySystem = paySystem;
-        this.isActive = isActive;
         this.accountId = accountId;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
     }
 
     public CardType getCardType() {
@@ -25,10 +21,6 @@ public class Card {
 
     public PaySystem getPaySystem() {
         return paySystem;
-    }
-
-    public boolean isActive() {
-        return isActive;
     }
 
     public int getAccountId() {

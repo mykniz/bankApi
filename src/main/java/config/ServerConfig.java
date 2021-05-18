@@ -1,9 +1,7 @@
 package config;
 
 import com.sun.net.httpserver.HttpServer;
-import controller.AccountHandler;
-import controller.CardHandler;
-import controller.UserHandler;
+import controller.*;
 import service.AccountService;
 import service.CardService;
 import service.UserService;
@@ -20,6 +18,7 @@ public class ServerConfig {
     private static final int BACKLOG = 1;
 
     public static final String FIND_ALL_USERS = "/users";
+    public static final String FIND_ALL_USERS_BANK_INFO = "/users/bankInfo";
     public static final String FIND_ALL_ACCOUNTS = "/accounts";
     public static final String FIND_ALL_CARDS = "/cards";
     public static final String CARD_ORDER = "/cards/order";
@@ -29,12 +28,12 @@ public class ServerConfig {
 
     public static void startServer(UserService userService, CardService cardService, AccountService accountService) throws IOException {
         HttpServer httpServer = HttpServer.create(new InetSocketAddress(PORT), BACKLOG);
+
         httpServer.createContext(FIND_ALL_USERS, new UserHandler(userService));
+        httpServer.createContext(FIND_ALL_USERS_BANK_INFO, new UserBankInfoHandler(userService));
         httpServer.createContext(FIND_ALL_ACCOUNTS, new AccountHandler(accountService));
-
-        httpServer.createContext(FIND_ALL_CARDS, new CardHandler(cardService));
-        httpServer.createContext(CARD_ORDER, new CardHandler(cardService));
-
+        httpServer.createContext(FIND_ALL_CARDS, new GetCardsHandler(cardService));
+        httpServer.createContext(CARD_ORDER, new CardOrderHandler(cardService));
 
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
         httpServer.setExecutor(threadPoolExecutor);

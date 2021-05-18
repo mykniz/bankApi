@@ -1,5 +1,6 @@
 package dao;
 
+import config.DatabaseConfig;
 import entity.Account;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -13,11 +14,6 @@ import java.util.Optional;
 public class AccountDaoImpl implements AccountDao{
 
     private final static String SQL_FIND_ALL = "SELECT * FROM ACCOUNT";
-    private final Connection connection;
-
-    public AccountDaoImpl(Connection connection) {
-        this.connection = connection;
-    }
 
     @Override
     public Optional<Account> findById(int id) {
@@ -41,17 +37,20 @@ public class AccountDaoImpl implements AccountDao{
 
     @Override
     public List<Account> findAll() throws SQLException, FileNotFoundException {
+        Connection connection = DatabaseConfig.getConnection();
         List<Account> accountList = new ArrayList<>();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL);
             while (resultSet.next()) {
                 accountList.add(new Account(
                         resultSet.getString(2),
-                        resultSet.getBoolean(3)));
+                        resultSet.getBigDecimal(3),
+                        resultSet.getBoolean(4)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        connection.close();
         return accountList;
     }
 }

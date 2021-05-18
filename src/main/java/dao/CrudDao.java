@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface CrudDao<T> {
 
     Optional<T> findById(int id);
-    void save(T model);
+    void save(T model) throws SQLException, FileNotFoundException;
     void update(T model);
     void delete(Long id);
 

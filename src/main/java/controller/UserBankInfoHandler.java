@@ -5,19 +5,18 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import entity.User;
+import dto.UserDto;
 import service.UserService;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.SQLException;
 import java.util.List;
 
-public class UserHandler implements HttpHandler {
+public class UserBankInfoHandler implements HttpHandler {
 
     private final UserService userService;
 
-    public UserHandler(UserService userService) {
+    public UserBankInfoHandler(UserService userService) {
         this.userService = userService;
     }
 
@@ -27,18 +26,18 @@ public class UserHandler implements HttpHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode arrayNode = objectMapper.createArrayNode();
 
-        try {
-            List<User> userList = userService.findAll();
-            for (User user : userList) {
-                ObjectNode objectNode = objectMapper.createObjectNode();
-                objectNode.put("firstname", user.getFirstName());
-                objectNode.put("lastname", user.getLastName());
-                arrayNode.add(objectNode);
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
+        List<UserDto> userList = userService.findUsersWithCards();
 
+        for (UserDto userDto : userList) {
+            ObjectNode objectNode = objectMapper.createObjectNode();
+            objectNode.put("firstName", userDto.getFirstName());
+            objectNode.put("lastName", userDto.getLastName());
+            objectNode.put("balance", userDto.getBalance());
+            objectNode.put("number", userDto.getCardNumber());
+            objectNode.put("cardType", userDto.getCardType().toString());
+            objectNode.put("paySystem", userDto.getPaySystem().toString());
+            arrayNode.add(objectNode);
+        }
         String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(arrayNode);
         exchange.sendResponseHeaders(200, jsonResponse.length());
         OutputStream outputStream = exchange.getResponseBody();
