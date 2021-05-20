@@ -20,6 +20,9 @@ public class ServerConfig {
     public static final String FIND_ALL_USERS = "/users";
     public static final String FIND_ALL_USERS_BANK_INFO = "/users/bankInfo";
     public static final String FIND_ALL_ACCOUNTS = "/accounts";
+    public static final String BALANCE_TOP_UP = "/accounts/topUp";
+    public static final String TRANSACTIONS = "/accounts/transactions";
+
     public static final String FIND_ALL_CARDS = "/cards";
     public static final String CARD_ORDER = "/cards/order";
 
@@ -29,9 +32,13 @@ public class ServerConfig {
     public static void startServer(UserService userService, CardService cardService, AccountService accountService) throws IOException {
         HttpServer httpServer = HttpServer.create(new InetSocketAddress(PORT), BACKLOG);
 
-        httpServer.createContext(FIND_ALL_USERS, new UserHandler(userService));
+        httpServer.createContext(FIND_ALL_USERS, new GetUsersHandler(userService));
         httpServer.createContext(FIND_ALL_USERS_BANK_INFO, new UserBankInfoHandler(userService));
-        httpServer.createContext(FIND_ALL_ACCOUNTS, new AccountHandler(accountService));
+
+        httpServer.createContext(FIND_ALL_ACCOUNTS, new GetAccountsHandler(accountService));
+        httpServer.createContext(BALANCE_TOP_UP, new TopUpHandler(accountService));
+      //  httpServer.createContext(TRANSACTIONS, new TransactionsHandler(accountService)); //todo
+
         httpServer.createContext(FIND_ALL_CARDS, new GetCardsHandler(cardService));
         httpServer.createContext(CARD_ORDER, new CardOrderHandler(cardService));
 

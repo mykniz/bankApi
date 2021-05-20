@@ -11,7 +11,7 @@ public interface CrudDao<T> {
     Optional<T> findById(int id);
     void save(T model) throws SQLException, FileNotFoundException;
     void update(T model);
-    void delete(Long id);
+    void delete(int id);
 
     List<T> findAll() throws SQLException, FileNotFoundException;
 }

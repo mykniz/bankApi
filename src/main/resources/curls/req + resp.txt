@@ -1,0 +1,7 @@
+http://localhost:8000/cards/order?cardType=DEBET&paySystem=VISA&accountId=2
+
+curl -X GET http://localhost:8000/cards
+curl -X GET  "http://localhost:8000/cards/order?cardType=DEBET&paySystem=VISA&accountId=2"
+curl -X POST http://localhost:8000/cards/order -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/cardOrder.json
+
+curl -X POST http://localhost:8000/accounts/topUp -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/topup.json

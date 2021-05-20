@@ -12,7 +12,10 @@ import java.util.logging.Logger;
 public class DatabaseConfig {
 
     private final static String PROPERTIES_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/db.properties";
-    private final static String SQL_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/user.sql";
+    private final static String SQL_USER_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/USER.sql";
+    private final static String SQL_ACCOUNT_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/ACCOUNT.sql";
+    private final static String SQL_CARD_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/CARD.sql";
+
     private static final Logger log = Logger.getLogger(DatabaseConfig.class.getName());
 
     public static Connection getConnection() throws FileNotFoundException, SQLException {
@@ -39,7 +42,9 @@ public class DatabaseConfig {
 
     public static void createDatabase() {
         try( Connection connection = DatabaseConfig.getConnection()) {
-            RunScript.execute(connection, new FileReader(SQL_SCRIPT_PATH));
+            RunScript.execute(connection, new FileReader(SQL_USER_SCRIPT_PATH));
+            RunScript.execute(connection, new FileReader(SQL_ACCOUNT_SCRIPT_PATH));
+            RunScript.execute(connection, new FileReader(SQL_CARD_SCRIPT_PATH));
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
         }

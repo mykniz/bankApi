@@ -5,22 +5,20 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import entity.Account;
-import entity.Card;
-import service.AccountService;
-import service.CardService;
+import entity.User;
+import service.UserService;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AccountHandler implements HttpHandler {
+public class GetUsersHandler implements HttpHandler {
 
-    private final AccountService accountService;
+    private final UserService userService;
 
-    public AccountHandler(AccountService accountService) {
-        this.accountService = accountService;
+    public GetUsersHandler(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -30,12 +28,12 @@ public class AccountHandler implements HttpHandler {
         ArrayNode arrayNode = objectMapper.createArrayNode();
 
         try {
-            List<Account> accountList = accountService.findAll();
-            for (Account account : accountList) {
+            List<User> userList = userService.findAll();
+            for (User user : userList) {
                 ObjectNode objectNode = objectMapper.createObjectNode();
-                objectNode.put("account", account.getAccount());
-                objectNode.put("balance", account.getBalance());
-                objectNode.put("isOpen", account.isOpen());
+                objectNode.put("firstName", user.getFirstName());
+                objectNode.put("lastName", user.getLastName());
+                objectNode.put("phoneNumber", user.getPhoneNumber());
                 arrayNode.add(objectNode);
             }
         } catch (SQLException sqlException) {

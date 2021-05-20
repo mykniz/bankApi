@@ -1,7 +1,7 @@
 package dao;
 
 import config.DatabaseConfig;
-import dto.UserDto;
+import dto.UserBankInfoResponseDto;
 import entity.CardType;
 import entity.PaySystem;
 import entity.User;
@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(int id) {
 
     }
 
@@ -48,7 +48,7 @@ public class UserDaoImpl implements UserDao {
              Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL_USERS);
             while (resultSet.next()) {
-                listOfUsers.add(new User(resultSet.getString(2), resultSet.getString(3)));
+                listOfUsers.add(new User(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4)));
             }
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
@@ -57,14 +57,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<UserDto> findUsersBankInfo() {
+    public List<UserBankInfoResponseDto> findUsersBankInfo() {
 
-        List<UserDto> listOfUsers = new ArrayList<>();
+        List<UserBankInfoResponseDto> listOfUsers = new ArrayList<>();
         try (Connection connection = DatabaseConfig.getConnection();
              Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(SQL_FIND_USERS_BANK_INFO);
             while (resultSet.next()) {
-                listOfUsers.add(new UserDto(
+                listOfUsers.add(new UserBankInfoResponseDto(
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getBigDecimal(3),

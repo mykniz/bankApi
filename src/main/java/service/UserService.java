@@ -1,7 +1,7 @@
 package service;
 
 import dao.UserDao;
-import dto.UserDto;
+import dto.UserBankInfoResponseDto;
 import entity.User;
 
 import java.io.FileNotFoundException;
@@ -18,7 +18,7 @@ public class UserService {
     public List<User> findAll() throws SQLException, FileNotFoundException {
         return userDao.findAll();
     }
-    public List<UserDto> findUsersWithCards() {
+    public List<UserBankInfoResponseDto> findUsersWithCards() {
         return userDao.findUsersBankInfo();
     }
 }

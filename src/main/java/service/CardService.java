@@ -1,7 +1,7 @@
 package service;
 
 import dao.CardDao;
-import dto.CardDto;
+import dto.CardOrderRequestDto;
 import entity.Card;
 import entity.CardType;
 import entity.PaySystem;
@@ -25,14 +25,13 @@ public class CardService {
         return cardDao.findAll();
     }
 
-
-    public void orderCard(CardDto cardDto) throws FileNotFoundException, SQLException {
+    public void orderCard(CardOrderRequestDto cardOrderRequestDto) throws FileNotFoundException, SQLException {
 
         String cardNumber = generateRandom();
-        CardType cardType = cardDto.getCardType();
-        PaySystem paySystem = cardDto.getPaySystem();
+        CardType cardType = cardOrderRequestDto.getCardType();
+        PaySystem paySystem = cardOrderRequestDto.getPaySystem();
         boolean isActive = false;
-        int accountId = cardDto.getAccountId();
+        int accountId = cardOrderRequestDto.getAccountId();
         Card card = new Card(cardNumber,cardType,paySystem,isActive,accountId);
 
         cardDao.save(card);

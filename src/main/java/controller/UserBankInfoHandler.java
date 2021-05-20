@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import dto.UserDto;
+import dto.UserBankInfoResponseDto;
 import service.UserService;
 
 import java.io.IOException;
@@ -26,16 +26,16 @@ public class UserBankInfoHandler implements HttpHandler {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode arrayNode = objectMapper.createArrayNode();
 
-        List<UserDto> userList = userService.findUsersWithCards();
+        List<UserBankInfoResponseDto> userList = userService.findUsersWithCards();
 
-        for (UserDto userDto : userList) {
+        for (UserBankInfoResponseDto userBankInfoResponseDto : userList) {
             ObjectNode objectNode = objectMapper.createObjectNode();
-            objectNode.put("firstName", userDto.getFirstName());
-            objectNode.put("lastName", userDto.getLastName());
-            objectNode.put("balance", userDto.getBalance());
-            objectNode.put("number", userDto.getCardNumber());
-            objectNode.put("cardType", userDto.getCardType().toString());
-            objectNode.put("paySystem", userDto.getPaySystem().toString());
+            objectNode.put("firstName", userBankInfoResponseDto.getFirstName());
+            objectNode.put("lastName", userBankInfoResponseDto.getLastName());
+            objectNode.put("balance", userBankInfoResponseDto.getBalance());
+            objectNode.put("number", userBankInfoResponseDto.getCardNumber());
+            objectNode.put("cardType", userBankInfoResponseDto.getCardType().toString());
+            objectNode.put("paySystem", userBankInfoResponseDto.getPaySystem().toString());
             arrayNode.add(objectNode);
         }
         String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(arrayNode);

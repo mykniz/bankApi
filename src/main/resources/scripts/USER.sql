@@ -1,0 +1,112 @@
+DROP TABLE IF EXISTS USER;
+
+CREATE TABLE IF NOT EXISTS USER
+(
+    user_id   INTEGER      not null AUTO_INCREMENT,
+    first_name VARCHAR(255) not null,
+    last_name VARCHAR(255) not null,
+    phone_number VARCHAR(255) not null,
+    PRIMARY KEY (user_id)
+);
+
+insert into USER (first_name, last_name, phone_number) values ('Leo', 'Messi', '+7 070-246-3274');
+insert into USER (first_name, last_name, phone_number) values ('John', 'Smith', '+7 712-305-9426');
+insert into USER (first_name, last_name, phone_number) values ('Fleurette', 'Aldins', '+7 064-014-9187');
+insert into USER (first_name, last_name, phone_number) values ('Lucilia', 'Studdard', '+7 295-392-7920');
+insert into USER (first_name, last_name, phone_number) values ('Barbey', 'McDell', '+7 883-318-7943');
+insert into USER (first_name, last_name, phone_number) values ('Homer', 'Layson', '+7 316-378-2437');
+insert into USER (first_name, last_name, phone_number) values ('Averyl', 'Mews', '+7 096-848-0085');
+insert into USER (first_name, last_name, phone_number) values ('Kellie', 'Bloan', '+7 890-382-1576');
+insert into USER (first_name, last_name, phone_number) values ('Rollins', 'Braidley', '+7 568-568-2674');
+insert into USER (first_name, last_name, phone_number) values ('Vale', 'Balthasar', '+7 693-567-5696');
+
+-- insert into USER (first_name, last_name, phone_number) values ('Bron', 'Rosenwald', '+7 006-013-1943');
+-- insert into USER (first_name, last_name, phone_number) values ('Tobie', 'McFadin', '+7 903-822-9753');
+-- insert into USER (first_name, last_name, phone_number) values ('Yank', 'Brandoni', '+7 377-071-2914');
+-- insert into USER (first_name, last_name, phone_number) values ('Mal', 'Rosso', '+7 816-221-0888');
+-- insert into USER (first_name, last_name, phone_number) values ('Gracie', 'Quarton', '+7 461-861-8106');
+-- insert into USER (first_name, last_name, phone_number) values ('Joeann', 'Birmingham', '+7 543-454-4698');
+-- insert into USER (first_name, last_name, phone_number) values ('Spencer', 'Hamblington', '+7 307-142-6948');
+-- insert into USER (first_name, last_name, phone_number) values ('Zahara', 'Clemencon', '+7 601-580-8934');
+-- insert into USER (first_name, last_name, phone_number) values ('Carlyle', 'Waslin', '+7 165-593-6044');
+-- insert into USER (first_name, last_name, phone_number) values ('Justus', 'Balasin', '+7 100-683-7124');
+-- insert into USER (first_name, last_name, phone_number) values ('Bay', 'Cheltnam', '+7 596-794-1324');
+-- insert into USER (first_name, last_name, phone_number) values ('Rhianon', 'McCroft', '+7 577-369-2879');
+-- insert into USER (first_name, last_name, phone_number) values ('Fianna', 'Clemot', '+7 252-944-4364');
+-- insert into USER (first_name, last_name, phone_number) values ('Fay', 'Talkington', '+7 135-713-4387');
+-- insert into USER (first_name, last_name, phone_number) values ('Celka', 'Hawkeridge', '+7 191-219-2302');
+-- insert into USER (first_name, last_name, phone_number) values ('Rosana', 'Selwyne', '+7 134-269-1793');
+-- insert into USER (first_name, last_name, phone_number) values ('Codie', 'Hagerty', '+7 865-228-9958');
+-- insert into USER (first_name, last_name, phone_number) values ('Maurita', 'Nizet', '+7 628-009-7783');
+-- insert into USER (first_name, last_name, phone_number) values ('Jacquelin', 'Copland', '+7 276-590-1694');
+-- insert into USER (first_name, last_name, phone_number) values ('Swen', 'De Vaar', '+7 543-272-3170');
+-- insert into USER (first_name, last_name, phone_number) values ('Yvor', 'Pedersen', '+7 153-428-7142');
+-- insert into USER (first_name, last_name, phone_number) values ('Kevon', 'Youell', '+7 376-405-1984');
+-- insert into USER (first_name, last_name, phone_number) values ('Kelsi', 'Muneely', '+7 196-163-4626');
+-- insert into USER (first_name, last_name, phone_number) values ('Gillan', 'Bulluck', '+7 809-378-2632');
+-- insert into USER (first_name, last_name, phone_number) values ('Cahra', 'Diggar', '+7 733-391-5485');
+-- insert into USER (first_name, last_name, phone_number) values ('Edouard', 'Dabnor', '+7 658-201-7052');
+-- insert into USER (first_name, last_name, phone_number) values ('Doralyn', 'Rymour', '+7 297-814-7694');
+-- insert into USER (first_name, last_name, phone_number) values ('Flint', 'Scrowton', '+7 857-439-1828');
+-- insert into USER (first_name, last_name, phone_number) values ('Malissia', 'Middle', '+7 044-132-0776');
+-- insert into USER (first_name, last_name, phone_number) values ('Cheri', 'Tomankowski', '+7 767-832-3897');
+-- insert into USER (first_name, last_name, phone_number) values ('Adeline', 'Bartle', '+7 884-154-8958');
+-- insert into USER (first_name, last_name, phone_number) values ('Andie', 'Hanscome', '+7 405-588-9697');
+-- insert into USER (first_name, last_name, phone_number) values ('Norbie', 'McNulty', '+7 673-369-7291');
+-- insert into USER (first_name, last_name, phone_number) values ('Pace', 'Negri', '+7 584-227-9340');
+-- insert into USER (first_name, last_name, phone_number) values ('Lissi', 'Nisbet', '+7 819-492-9385');
+-- insert into USER (first_name, last_name, phone_number) values ('Isacco', 'Fandrich', '+7 529-785-2293');
+-- insert into USER (first_name, last_name, phone_number) values ('Thaddus', 'Jermy', '+7 501-219-4991');
+-- insert into USER (first_name, last_name, phone_number) values ('Ransom', 'Cogswell', '+7 880-994-6081');
+-- insert into USER (first_name, last_name, phone_number) values ('Forest', 'Cornelisse', '+7 087-945-2518');
+-- insert into USER (first_name, last_name, phone_number) values ('Brandon', 'Rowlson', '+7 389-853-4316');
+-- insert into USER (first_name, last_name, phone_number) values ('Zachery', 'Gitthouse', '+7 380-673-9384');
+-- insert into USER (first_name, last_name, phone_number) values ('Wilhelm', 'Thrustle', '+7 869-321-8419');
+-- insert into USER (first_name, last_name, phone_number) values ('Bettine', 'Petricek', '+7 658-218-3471');
+-- insert into USER (first_name, last_name, phone_number) values ('Donni', 'Cosins', '+7 612-918-6470');
+-- insert into USER (first_name, last_name, phone_number) values ('Karee', 'Cridlan', '+7 157-247-5740');
+-- insert into USER (first_name, last_name, phone_number) values ('Astrid', 'Ughelli', '+7 921-710-4148');
+-- insert into USER (first_name, last_name, phone_number) values ('Sherill', 'Boxhall', '+7 049-035-4508');
+-- insert into USER (first_name, last_name, phone_number) values ('Murielle', 'Archley', '+7 702-937-5885');
+-- insert into USER (first_name, last_name, phone_number) values ('Charmion', 'Bumphrey', '+7 447-990-7627');
+-- insert into USER (first_name, last_name, phone_number) values ('Anjanette', 'Leavold', '+7 163-235-5213');
+-- insert into USER (first_name, last_name, phone_number) values ('Vilhelmina', 'Gloucester', '+7 234-360-7588');
+-- insert into USER (first_name, last_name, phone_number) values ('Mart', 'Febvre', '+7 673-220-9988');
+-- insert into USER (first_name, last_name, phone_number) values ('Gaston', 'Kirkpatrick', '+7 374-879-6743');
+-- insert into USER (first_name, last_name, phone_number) values ('Albert', 'Peartree', '+7 753-398-4791');
+-- insert into USER (first_name, last_name, phone_number) values ('Chrissy', 'Struys', '+7 405-968-9476');
+-- insert into USER (first_name, last_name, phone_number) values ('Lila', 'Zavattieri', '+7 391-020-6595');
+-- insert into USER (first_name, last_name, phone_number) values ('Allistir', 'Selway', '+7 586-773-8005');
+-- insert into USER (first_name, last_name, phone_number) values ('Roxana', 'Reubens', '+7 504-535-1969');
+-- insert into USER (first_name, last_name, phone_number) values ('Alvinia', 'Seeds', '+7 017-156-3118');
+-- insert into USER (first_name, last_name, phone_number) values ('Gerrie', 'Smead', '+7 718-698-0034');
+-- insert into USER (first_name, last_name, phone_number) values ('Cybill', 'Leving', '+7 326-825-0190');
+-- insert into USER (first_name, last_name, phone_number) values ('Laraine', 'Wilcocks', '+7 867-754-8183');
+-- insert into USER (first_name, last_name, phone_number) values ('Hadlee', 'Witherden', '+7 319-252-7236');
+-- insert into USER (first_name, last_name, phone_number) values ('Corey', 'MacNally', '+7 635-572-8919');
+-- insert into USER (first_name, last_name, phone_number) values ('Constancia', 'Aingell', '+7 730-077-2808');
+-- insert into USER (first_name, last_name, phone_number) values ('Claiborn', 'Hatry', '+7 545-315-0133');
+-- insert into USER (first_name, last_name, phone_number) values ('Norri', 'Rosettini', '+7 941-847-7502');
+-- insert into USER (first_name, last_name, phone_number) values ('Wanda', 'Brisseau', '+7 286-082-2342');
+-- insert into USER (first_name, last_name, phone_number) values ('Hermie', 'Culpin', '+7 925-394-2961');
+-- insert into USER (first_name, last_name, phone_number) values ('Lodovico', 'Bim', '+7 834-988-9516');
+-- insert into USER (first_name, last_name, phone_number) values ('Fredrika', 'Gippes', '+7 243-348-3703');
+-- insert into USER (first_name, last_name, phone_number) values ('Weylin', 'Rosenblum', '+7 861-428-0750');
+-- insert into USER (first_name, last_name, phone_number) values ('Josie', 'Marder', '+7 268-675-2097');
+-- insert into USER (first_name, last_name, phone_number) values ('Benedetto', 'MacWilliam', '+7 222-273-4713');
+-- insert into USER (first_name, last_name, phone_number) values ('Herta', 'Layfield', '+7 081-363-8313');
+-- insert into USER (first_name, last_name, phone_number) values ('Red', 'Yitzhakov', '+7 543-105-7221');
+-- insert into USER (first_name, last_name, phone_number) values ('Vanessa', 'Davenall', '+7 190-186-0976');
+-- insert into USER (first_name, last_name, phone_number) values ('Rennie', 'Sara', '+7 504-631-8635');
+-- insert into USER (first_name, last_name, phone_number) values ('Guenevere', 'McOnie', '+7 058-449-6233');
+-- insert into USER (first_name, last_name, phone_number) values ('Jerrie', 'Lorne', '+7 671-148-4815');
+-- insert into USER (first_name, last_name, phone_number) values ('Wilma', 'Mish', '+7 727-433-7913');
+-- insert into USER (first_name, last_name, phone_number) values ('Florentia', 'Barbary', '+7 673-702-6596');
+-- insert into USER (first_name, last_name, phone_number) values ('Pacorro', 'Kilroy', '+7 088-126-0570');
+-- insert into USER (first_name, last_name, phone_number) values ('De witt', 'Barraclough', '+7 160-136-9199');
+-- insert into USER (first_name, last_name, phone_number) values ('Jerad', 'Goodger', '+7 887-885-2778');
+-- insert into USER (first_name, last_name, phone_number) values ('Aubrie', 'Lomath', '+7 013-494-1897');
+-- insert into USER (first_name, last_name, phone_number) values ('Sansone', 'Oggers', '+7 309-803-7774');
+-- insert into USER (first_name, last_name, phone_number) values ('Morly', 'Dulen', '+7 618-284-5504');
+-- insert into USER (first_name, last_name, phone_number) values ('Zola', 'Camell', '+7 374-214-6878');
+-- insert into USER (first_name, last_name, phone_number) values ('Mel', 'Normington', '+7 857-688-0071');

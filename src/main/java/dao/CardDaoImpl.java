@@ -1,7 +1,6 @@
 package dao;
 
 import config.DatabaseConfig;
-import dto.CardDto;
 import entity.Card;
 import entity.CardType;
 import entity.PaySystem;
@@ -15,6 +14,8 @@ import java.util.Optional;
 public class CardDaoImpl implements CardDao {
     private final static String SQL_FIND_ALL =
             "SELECT * FROM CARD";
+    private final static String SQL_FIND_CARD_BY_ID =
+            "SELECT * FROM CARD WHERE ";
     private static final String SQL_INSERT_INTO_CARD =
             "INSERT INTO CARD (number, card_type, pay_system, is_active, account_id ) Values (?, ?, ?, ?, ?)";
 
@@ -47,7 +48,7 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(int id) {
 
     }
 

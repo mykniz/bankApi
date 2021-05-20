@@ -5,7 +5,7 @@ import entity.PaySystem;
 
 import java.math.BigDecimal;
 
-public class UserDto {
+public class UserBankInfoResponseDto {
 
     private final String firstName;
     private final String lastName;
@@ -14,7 +14,7 @@ public class UserDto {
     private final CardType cardType;
     private final PaySystem paySystem;
 
-    public UserDto(String firstName, String lastName, BigDecimal balance, String cardNumber, CardType cardType, PaySystem paySystem) {
+    public UserBankInfoResponseDto(String firstName, String lastName, BigDecimal balance, String cardNumber, CardType cardType, PaySystem paySystem) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.balance = balance;
