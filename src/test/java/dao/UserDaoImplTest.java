@@ -14,7 +14,7 @@ class UserDaoImplTest {
     @Test
     void findById() {
 
-        Assertions.assertEquals(1, new UserDaoImpl().findById(1).get().getUserId();
+        Assertions.assertEquals(1, new UserDaoImpl().findById(1).get().getUserId());
 
     }
 
