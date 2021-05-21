@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS USER;
+DROP TABLE IF EXISTS CLIENT CASCADE;
 
-CREATE TABLE IF NOT EXISTS USER
+CREATE TABLE IF NOT EXISTS CLIENT
 (
     user_id   INTEGER      not null AUTO_INCREMENT,
     first_name VARCHAR(255) not null,
@@ -9,16 +9,16 @@ CREATE TABLE IF NOT EXISTS USER
     PRIMARY KEY (user_id)
 );
 
-insert into USER (first_name, last_name, phone_number) values ('Leo', 'Messi', '+7 070-246-3274');
-insert into USER (first_name, last_name, phone_number) values ('John', 'Smith', '+7 712-305-9426');
-insert into USER (first_name, last_name, phone_number) values ('Fleurette', 'Aldins', '+7 064-014-9187');
-insert into USER (first_name, last_name, phone_number) values ('Lucilia', 'Studdard', '+7 295-392-7920');
-insert into USER (first_name, last_name, phone_number) values ('Barbey', 'McDell', '+7 883-318-7943');
-insert into USER (first_name, last_name, phone_number) values ('Homer', 'Layson', '+7 316-378-2437');
-insert into USER (first_name, last_name, phone_number) values ('Averyl', 'Mews', '+7 096-848-0085');
-insert into USER (first_name, last_name, phone_number) values ('Kellie', 'Bloan', '+7 890-382-1576');
-insert into USER (first_name, last_name, phone_number) values ('Rollins', 'Braidley', '+7 568-568-2674');
-insert into USER (first_name, last_name, phone_number) values ('Vale', 'Balthasar', '+7 693-567-5696');
+insert into CLIENT (first_name, last_name, phone_number) values ('Leo', 'Messi', '+7 070-246-3274');
+insert into CLIENT (first_name, last_name, phone_number) values ('John', 'Smith', '+7 712-305-9426');
+insert into CLIENT (first_name, last_name, phone_number) values ('Fleurette', 'Aldins', '+7 064-014-9187');
+insert into CLIENT (first_name, last_name, phone_number) values ('Lucilia', 'Studdard', '+7 295-392-7920');
+insert into CLIENT (first_name, last_name, phone_number) values ('Barbey', 'McDell', '+7 883-318-7943');
+insert into CLIENT (first_name, last_name, phone_number) values ('Homer', 'Layson', '+7 316-378-2437');
+insert into CLIENT (first_name, last_name, phone_number) values ('Averyl', 'Mews', '+7 096-848-0085');
+insert into CLIENT (first_name, last_name, phone_number) values ('Kellie', 'Bloan', '+7 890-382-1576');
+insert into CLIENT (first_name, last_name, phone_number) values ('Rollins', 'Braidley', '+7 568-568-2674');
+insert into CLIENT (first_name, last_name, phone_number) values ('Vale', 'Balthasar', '+7 693-567-5696');
 
 -- insert into USER (first_name, last_name, phone_number) values ('Bron', 'Rosenwald', '+7 006-013-1943');
 -- insert into USER (first_name, last_name, phone_number) values ('Tobie', 'McFadin', '+7 903-822-9753');

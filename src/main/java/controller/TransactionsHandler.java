@@ -3,7 +3,7 @@ package controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import converters.*;
+import converter.*;
 import dto.TransactionRequestDto;
 import entity.Account;
 import service.AccountService;
@@ -25,6 +25,10 @@ public class TransactionsHandler implements HttpHandler {
         this.accountService = accountService;
     }
 
+    /**
+     * Receives transaction dto as JSON from POST method and return JSON array of accounts
+     * @param exchange
+     */
     @Override
     public void handle(HttpExchange exchange) { //todo class
 
@@ -47,6 +51,7 @@ public class TransactionsHandler implements HttpHandler {
             exchange.sendResponseHeaders(200, jsonResponse.length());
             OutputStream outputStream = exchange.getResponseBody();
             outputStream.write(jsonResponse.getBytes());
+            exchange.close();
         } catch (SQLException | IOException exception) {
             exception.printStackTrace();
         }

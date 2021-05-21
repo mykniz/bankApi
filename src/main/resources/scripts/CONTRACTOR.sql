@@ -9,5 +9,5 @@ CREATE TABLE IF NOT EXISTS CONTRACTOR
     user_id int,
     contractor_id int,
     PRIMARY KEY (id),
-    foreign key (user_id) references USER(user_id)
+    foreign key (user_id) references CLIENT(user_id)
 );

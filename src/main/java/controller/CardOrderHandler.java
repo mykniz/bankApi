@@ -2,7 +2,7 @@ package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import config.ServerConfig;
-import converters.*;
+import converter.*;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -26,38 +26,13 @@ public class CardOrderHandler implements HttpHandler {
         this.cardService = cardService;
     }
 
+    /**
+     * Receives card dto as JSON from POST method and return JSON array of cards
+     * @param exchange
+     */
     @Override
     public void handle(HttpExchange exchange) {
 
-        /**
-         * realisation for GET request with params from URI
-         */
-        if (exchange.getRequestMethod().equalsIgnoreCase("GET")) {
-
-            try {
-                String query = exchange.getRequestURI().getQuery();
-                String cardType = QueryToMapParser.queryToMap(query).get("cardType");
-                String paySystem = QueryToMapParser.queryToMap(query).get("paySystem");
-                int accountId = Integer.parseInt(QueryToMapParser.queryToMap(query).get("accountId"));
-
-                CardOrderRequestDto cardOrderRequestDto = new CardOrderRequestDto(CardType.valueOf(cardType),
-                        PaySystem.valueOf(paySystem), accountId);
-                cardService.orderCard(cardOrderRequestDto);
-
-                log.info("GET request with payload " + query);
-
-                String jsonResponse = query;
-                exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
-                OutputStream outputStream = exchange.getResponseBody();
-                outputStream.write(jsonResponse.getBytes());
-            } catch (SQLException | IOException exception) {
-                exception.printStackTrace();
-            }
-        }
-
-        /**
-         * realisation for POST request with params from Request Body with out jSON MAPPER
-         */
         if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
             ObjectMapper objectMapper = new ObjectMapper();
 
@@ -80,6 +55,7 @@ public class CardOrderHandler implements HttpHandler {
                 OutputStream outputStream = exchange.getResponseBody();
                 outputStream.write(jsonResponse.getBytes());
                 log.info("POST request with payload " + map);
+                exchange.close();
 
             } catch (SQLException | IOException exception) {
                 exception.printStackTrace();

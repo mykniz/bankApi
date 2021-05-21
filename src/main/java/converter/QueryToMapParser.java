@@ -1,11 +1,15 @@
-package converters;
+package converter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class QueryToMapParser {
 
-
+    /**
+     * parse URI parameters to map
+     * @param query
+     * @return
+     */
     public static Map<String, String> queryToMap(String query) {
         Map<String, String> result = new HashMap();
         for (String param : query.split("&")) {

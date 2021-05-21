@@ -24,11 +24,7 @@ public class CardService {
 
     public List<Card> findAll() {
         List<Card> cardList = new ArrayList<>();
-        try {
-            cardList = cardDao.findAll();
-        } catch (SQLException | FileNotFoundException exception) {
-            exception.printStackTrace();
-        }
+        cardList = cardDao.findAll();
         return cardList;
     }
 

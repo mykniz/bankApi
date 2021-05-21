@@ -5,13 +5,15 @@ import controller.*;
 import service.AccountService;
 import service.CardService;
 import service.UserService;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.Logger;
 
+/**
+ * basic server configuration
+ */
 public class ServerConfig {
 
     private static final int PORT = 8000;
@@ -28,9 +30,15 @@ public class ServerConfig {
     private static final String FIND_ALL_CARDS = "/cards";
     private static final String CARD_ORDER = "/cards/order";
 
-
     private static final Logger log = Logger.getLogger(ServerConfig.class.getName());
 
+    /**
+     * start server on port 8000
+     * @param userService
+     * @param cardService
+     * @param accountService
+     * @throws IOException
+     */
     public static void startServer(UserService userService, CardService cardService, AccountService accountService) throws IOException {
         HttpServer httpServer = HttpServer.create(new InetSocketAddress(PORT), BACKLOG);
 

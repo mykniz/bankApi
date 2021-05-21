@@ -19,17 +19,20 @@ public class UserBankInfoHandler implements HttpHandler {
         this.userService = userService;
     }
 
+    /**
+     * Receives GET request ant /users/bankInfo and return JSON array of users with bank info
+     * @param exchange
+     */
     @Override
     public void handle(HttpExchange exchange) {
-
         ObjectMapper objectMapper = new ObjectMapper();
         List<UserBankInfoResponseDto> usersBankInfo = userService.findUsersBankInfo();
-
         try {
             String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(usersBankInfo);
             exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
             OutputStream outputStream = exchange.getResponseBody();
             outputStream.write(jsonResponse.getBytes());
+            exchange.close();
         } catch (IOException exception) {
             exception.printStackTrace();
         }

@@ -15,9 +15,7 @@ public class UserDaoImpl implements UserDao {
     private final static String SQL_FIND_ALL_USER_CONTRACTORS = "SELECT * FROM CONTRACTOR WHERE USER_ID = ?";
     private final static String SQL_FIND_ALL_USER_ACCOUNTS = "SELECT * FROM ACCOUNT join USER U on U.USER_ID = ACCOUNT.USER_ID WHERE U.USER_ID = ?";
     private final static String SQL_FIND_ALL_ACCOUNT_CARDS = "SELECT * FROM CARD as c JOIN ACCOUNT A on A.ACCOUNT_ID = c.ACCOUNT_ID where A.ACCOUNT_ID = ?";
-
     private final static String SQL_FIND_ALL_USERS = "SELECT * FROM USER";
-
     private final static String SQL_FIND_USERS_BANK_INFO =
             "select U.FIRST_NAME, U.LAST_NAME, A.BALANCE, C.NUMBER, C.CARD_TYPE, C.PAY_SYSTEM FROM CARD AS C" +
                     "         JOIN ACCOUNT A on A.ACCOUNT_ID = C.ACCOUNT_ID" +
@@ -39,8 +37,8 @@ public class UserDaoImpl implements UserDao {
                         resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
-                        getUserContractors(userId),
-                        getUserAccounts(userId)));
+                        getUserContractors(userId, connection),
+                        getUserAccounts(userId, connection)));
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -67,8 +65,8 @@ public class UserDaoImpl implements UserDao {
                                 resultSet.getString(2),
                                 resultSet.getString(3),
                                 resultSet.getString(4),
-                                getUserContractors(userId),
-                                getUserAccounts(userId)));
+                                getUserContractors(userId, connection),
+                                getUserAccounts(userId, connection)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -132,10 +130,9 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    private List<Contractor> getUserContractors(int userId) {
+    private List<Contractor> getUserContractors(int userId, Connection connection) {
         List<Contractor> contractorList = new ArrayList<>();
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USER_CONTRACTORS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USER_CONTRACTORS)) {
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -153,10 +150,9 @@ public class UserDaoImpl implements UserDao {
         return contractorList;
     }
 
-    private List<Account> getUserAccounts(int userId) {
+    private List<Account> getUserAccounts(int userId, Connection connection) {
         List<Account> accountList = new ArrayList<>();
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USER_ACCOUNTS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_USER_ACCOUNTS)) {
             preparedStatement.setInt(1, userId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -166,7 +162,7 @@ public class UserDaoImpl implements UserDao {
                         resultSet.getBigDecimal(3),
                         resultSet.getBoolean(4),
                         resultSet.getInt(5),
-                        getAccountCards(accountId)));
+                        getAccountCards(accountId, connection)));
             }
 
         } catch (SQLException exception) {
@@ -176,10 +172,9 @@ public class UserDaoImpl implements UserDao {
     }
 
 
-    private List<Card> getAccountCards(int accountId) {
+    private List<Card> getAccountCards(int accountId, Connection connection) {
         List<Card> cardList = new ArrayList<>();
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_ACCOUNT_CARDS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_ACCOUNT_CARDS)) {
             preparedStatement.setInt(1, accountId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {

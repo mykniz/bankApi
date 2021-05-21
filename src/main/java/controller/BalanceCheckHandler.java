@@ -2,7 +2,7 @@ package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import config.ServerConfig;
-import converters.*;
+import converter.*;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -22,6 +22,11 @@ public class BalanceCheckHandler implements HttpHandler {
         this.accountService = accountService;
     }
 
+    /**
+     * Receives account id as JSON from POST method and return JSON account
+     * @param exchange
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
 
@@ -35,6 +40,7 @@ public class BalanceCheckHandler implements HttpHandler {
         exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
         OutputStream outputStream = exchange.getResponseBody();
         outputStream.write(jsonResponse.getBytes());
+        exchange.close();
 
     }
 }

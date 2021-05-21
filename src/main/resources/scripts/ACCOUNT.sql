@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS ACCOUNT;
+DROP TABLE IF EXISTS ACCOUNT CASCADE;
 
 CREATE TABLE IF NOT EXISTS ACCOUNT
 (
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS ACCOUNT
     user_id int,
     PRIMARY KEY (account_id),
     UNIQUE (account),
-    foreign key (user_id) references USER(user_id)
+    foreign key (user_id) references CLIENT(user_id)
 );
 
 insert into ACCOUNT (account, balance, is_open, user_id) values ('64419815581464276017', 1000000.00, true, 1);

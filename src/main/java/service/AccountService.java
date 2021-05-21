@@ -35,7 +35,7 @@ public class AccountService {
         int accountIdFrom = transactionRequestDto.getAccountIdFrom();
         int accountIdTo = transactionRequestDto.getAccountIdTo();
 
-        if (accountIdFrom != accountIdTo) {       //todo NESTED IF :(((((((
+        if (accountIdFrom != accountIdTo) {
             Account accountFrom = accountDao.findById(accountIdFrom).orElseThrow(() -> new RuntimeException("account not found"));
             Account accountTo = accountDao.findById(accountIdTo).orElseThrow(() -> new RuntimeException("account not found"));
             if (accountFrom.isOpen() && accountTo.isOpen()) {

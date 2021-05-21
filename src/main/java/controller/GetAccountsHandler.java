@@ -1,14 +1,10 @@
 package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import config.ServerConfig;
 import entity.Account;
-import org.h2.util.json.JSONArray;
 import service.AccountService;
 
 import java.io.IOException;
@@ -24,8 +20,12 @@ public class GetAccountsHandler implements HttpHandler {
         this.accountService = accountService;
     }
 
+    /**
+     * Receives GET request ant /accounts and return JSON array of accounts
+     * @param exchange
+     */
     @Override
-    public void handle(HttpExchange exchange) { //todo make JSON serializer
+    public void handle(HttpExchange exchange) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             List<Account> accountList = accountService.findAll();
@@ -33,6 +33,7 @@ public class GetAccountsHandler implements HttpHandler {
             exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
             OutputStream outputStream = exchange.getResponseBody();
             outputStream.write(jsonResponse.getBytes());
+            exchange.close();
         } catch (SQLException | IOException exception) {
             exception.printStackTrace();
         }

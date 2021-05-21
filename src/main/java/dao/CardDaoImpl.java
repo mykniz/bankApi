@@ -4,8 +4,6 @@ import config.DatabaseConfig;
 import entity.Card;
 import entity.CardType;
 import entity.PaySystem;
-
-import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,32 +23,27 @@ public class CardDaoImpl implements CardDao {
         return Optional.empty();
     }
 
-
     @Override
-    public void save(Card card) {
+    public List<Card> findCardsByAccountId(int accountId) {
+        List<Card> listOfCards = new ArrayList<>();
 
         try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_INTO_CARD)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CARDS_BY_ACCOUNT_ID)) {
+            preparedStatement.setInt(1, accountId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            preparedStatement.setString(1, card.getCardNumber());
-            preparedStatement.setString(2, card.getCardType().toString());
-            preparedStatement.setString(3, card.getPaySystem().toString());
-            preparedStatement.setBoolean(4, card.isActive());
-            preparedStatement.setInt(5, card.getAccountId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            while (resultSet.next()) {
+                listOfCards.add(new Card(
+                        resultSet.getString(2),
+                        CardType.valueOf(resultSet.getString(3)),
+                        PaySystem.valueOf(resultSet.getString(4)),
+                        resultSet.getBoolean(5),
+                        resultSet.getInt(6)));
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
-    }
-
-    @Override
-    public void update(Card model) {
-
-    }
-
-    @Override
-    public void delete(int id) {
-
+        return listOfCards;
     }
 
     @Override
@@ -76,25 +69,34 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public List<Card> findCardsByAccountId(int accountId) {
-        List<Card> listOfCards = new ArrayList<>();
-
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CARDS_BY_ACCOUNT_ID)) {
-            preparedStatement.setInt(1, accountId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                listOfCards.add(new Card(
-                        resultSet.getString(2),
-                        CardType.valueOf(resultSet.getString(3)),
-                        PaySystem.valueOf(resultSet.getString(4)),
-                        resultSet.getBoolean(5),
-                        resultSet.getInt(6)));
+    public void save(Card card) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
+            Savepoint savepoint = connection.setSavepoint();
+            connection.setAutoCommit(false);
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_INTO_CARD)) {
+                preparedStatement.setString(1, card.getCardNumber());
+                preparedStatement.setString(2, card.getCardType().toString());
+                preparedStatement.setString(3, card.getPaySystem().toString());
+                preparedStatement.setBoolean(4, card.isActive());
+                preparedStatement.setInt(5, card.getAccountId());
+                preparedStatement.executeUpdate();
+                connection.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                connection.rollback(savepoint);
             }
-        } catch (SQLException exception) {
-            exception.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return listOfCards;
+    }
+
+    @Override
+    public void update(Card card) {
+
+    }
+
+    @Override
+    public void delete(int id) {
+
     }
 }

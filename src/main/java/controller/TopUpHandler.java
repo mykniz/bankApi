@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import config.ServerConfig;
-import converters.*;
-import dto.TopUpRequestDto;
+import converter.*;
 import entity.Account;
 import service.AccountService;
 
@@ -15,16 +14,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class TopUpHandler implements HttpHandler {
-    private static final Logger log = Logger.getLogger(TopUpHandler.class.getName());
     private final AccountService accountService;
 
     public TopUpHandler(AccountService accountService) {
         this.accountService = accountService;
     }
 
+    /**
+     * Receives topUp dto as JSON from POST method and return account as JSON
+     * @param exchange
+     */
     @Override
     public void handle(HttpExchange exchange) {
 
@@ -37,8 +38,6 @@ public class TopUpHandler implements HttpHandler {
 
             int accountId = Integer.parseInt(map.get("accountId"));
             BigDecimal value = BigDecimal.valueOf(Long.parseLong(map.get("value")));
-      //      TopUpRequestDto topUpRequestDto = new TopUpRequestDto(accountId,value);
-
             accountService.topUp(accountId, value);
             Account account = accountService.findById(accountId);
 
@@ -46,6 +45,7 @@ public class TopUpHandler implements HttpHandler {
             exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
             OutputStream outputStream = exchange.getResponseBody();
             outputStream.write(jsonResponse.getBytes());
+            exchange.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

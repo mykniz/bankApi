@@ -6,16 +6,13 @@ import service.CardService;
 import service.UserService;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) throws IOException, SQLException {
 
-        DatabaseConfig.createDatabase();
+        DatabaseConfig.createTables();
 
         UserDao userDao = new UserDaoImpl();
         AccountDao accountDao = new AccountDaoImpl();

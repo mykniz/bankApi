@@ -20,6 +20,10 @@ public class GetUsersHandler implements HttpHandler {
         this.userService = userService;
     }
 
+    /**
+     * Receives GET request ant /users and return JSON array of clients
+     * @param exchange
+     */
     @Override
     public void handle(HttpExchange exchange) {
 
@@ -30,6 +34,7 @@ public class GetUsersHandler implements HttpHandler {
             exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
             OutputStream outputStream = exchange.getResponseBody();
             outputStream.write(jsonResponse.getBytes());
+            exchange.close();
         } catch (SQLException | IOException exception) {
             exception.printStackTrace();
         }

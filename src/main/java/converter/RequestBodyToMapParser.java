@@ -1,10 +1,15 @@
-package converters;
+package converter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RequestBodyToMapParser {
 
+    /**
+     * parse JSON from POST method to map
+     * @param requestBody
+     * @return
+     */
     public static Map<String, String> requestBodyToMap(String requestBody) {
         String croppedRequestBody = requestBody.replaceAll("[\\s{}\"]", "");
         Map<String, String> result = new HashMap();

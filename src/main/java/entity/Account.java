@@ -11,13 +11,6 @@ public class Account {
     private final int userId;
     private List<Card> cardList;
 
-    public Account(String account, BigDecimal balance, boolean isOpen, int userId) {
-        this.account = account;
-        this.balance = balance;
-        this.isOpen = isOpen;
-        this.userId = userId;
-    }
-
     public Account(String account, BigDecimal balance, boolean isOpen, int userId, List<Card> cardList) {
         this.account = account;
         this.balance = balance;
