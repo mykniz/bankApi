@@ -1,6 +1,7 @@
 package entity;
 
 public class Card {
+    //todo cardId
     private final String cardNumber;
     private final CardType cardType;
     private final PaySystem paySystem;

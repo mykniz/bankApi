@@ -1,6 +1,7 @@
 package service;
 
 import dao.UserDao;
+import dto.AddContractorRequestDto;
 import dto.UserBankInfoResponseDto;
 import entity.User;
 
@@ -18,7 +19,18 @@ public class UserService {
     public List<User> findAll() throws SQLException, FileNotFoundException {
         return userDao.findAll();
     }
-    public List<UserBankInfoResponseDto> findUsersWithCards() {
+    public List<UserBankInfoResponseDto> findUsersBankInfo() {
         return userDao.findUsersBankInfo();
+    }
+
+    public void addContractor(AddContractorRequestDto addContractorRequestDto) {
+
+        int userId = addContractorRequestDto.getUserId();
+        int contractorId = addContractorRequestDto.getContractorId();
+
+        if(userId != contractorId) {
+         User contractor = userDao.findById(contractorId).orElseThrow(() -> new RuntimeException("user not find"));
+         userDao.saveContractor(contractor, userId ,contractorId);
+        }
     }
 }

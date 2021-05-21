@@ -1,10 +1,9 @@
 package controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import config.ServerConfig;
 import entity.User;
 import service.UserService;
 
@@ -22,27 +21,17 @@ public class GetUsersHandler implements HttpHandler {
     }
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(HttpExchange exchange) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ArrayNode arrayNode = objectMapper.createArrayNode();
-
         try {
             List<User> userList = userService.findAll();
-            for (User user : userList) {
-                ObjectNode objectNode = objectMapper.createObjectNode();
-                objectNode.put("firstName", user.getFirstName());
-                objectNode.put("lastName", user.getLastName());
-                objectNode.put("phoneNumber", user.getPhoneNumber());
-                arrayNode.add(objectNode);
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(userList);
+            exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
+            OutputStream outputStream = exchange.getResponseBody();
+            outputStream.write(jsonResponse.getBytes());
+        } catch (SQLException | IOException exception) {
+            exception.printStackTrace();
         }
-
-        String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(arrayNode);
-        exchange.sendResponseHeaders(200, jsonResponse.length());
-        OutputStream outputStream = exchange.getResponseBody();
-        outputStream.write(jsonResponse.getBytes());
     }
 }

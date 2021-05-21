@@ -16,15 +16,17 @@ public class ServerConfig {
 
     private static final int PORT = 8000;
     private static final int BACKLOG = 1;
+    public static final int STATUS_OK = 200;
 
-    public static final String FIND_ALL_USERS = "/users";
-    public static final String FIND_ALL_USERS_BANK_INFO = "/users/bankInfo";
-    public static final String FIND_ALL_ACCOUNTS = "/accounts";
-    public static final String BALANCE_TOP_UP = "/accounts/topUp";
-    public static final String TRANSACTIONS = "/accounts/transactions";
-
-    public static final String FIND_ALL_CARDS = "/cards";
-    public static final String CARD_ORDER = "/cards/order";
+    private static final String FIND_ALL_USERS = "/users";
+    private static final String FIND_ALL_USERS_BANK_INFO = "/users/bankInfo";
+    private static final String ADD_CONTRACTOR = "/users/addContractor";
+    private static final String FIND_ALL_ACCOUNTS = "/accounts";
+    private static final String BALANCE_TOP_UP = "/accounts/topUp";
+    private static final String BALANCE_CHECK = "/accounts/check";
+    private static final String TRANSACTIONS = "/accounts/transactions";
+    private static final String FIND_ALL_CARDS = "/cards";
+    private static final String CARD_ORDER = "/cards/order";
 
 
     private static final Logger log = Logger.getLogger(ServerConfig.class.getName());
@@ -34,11 +36,11 @@ public class ServerConfig {
 
         httpServer.createContext(FIND_ALL_USERS, new GetUsersHandler(userService));
         httpServer.createContext(FIND_ALL_USERS_BANK_INFO, new UserBankInfoHandler(userService));
-
+        httpServer.createContext(ADD_CONTRACTOR, new AddContractorHandler(userService));
         httpServer.createContext(FIND_ALL_ACCOUNTS, new GetAccountsHandler(accountService));
         httpServer.createContext(BALANCE_TOP_UP, new TopUpHandler(accountService));
-      //  httpServer.createContext(TRANSACTIONS, new TransactionsHandler(accountService)); //todo
-
+        httpServer.createContext(BALANCE_CHECK, new BalanceCheckHandler(accountService));
+        httpServer.createContext(TRANSACTIONS, new TransactionsHandler(accountService));
         httpServer.createContext(FIND_ALL_CARDS, new GetCardsHandler(cardService));
         httpServer.createContext(CARD_ORDER, new CardOrderHandler(cardService));
 
@@ -48,6 +50,5 @@ public class ServerConfig {
 
         log.info("Server started on port 8000");
         log.info("---------------------------");
-
     }
 }

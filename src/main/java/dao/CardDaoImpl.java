@@ -14,16 +14,17 @@ import java.util.Optional;
 public class CardDaoImpl implements CardDao {
     private final static String SQL_FIND_ALL =
             "SELECT * FROM CARD";
-    private final static String SQL_FIND_CARD_BY_ID =
-            "SELECT * FROM CARD WHERE ";
     private static final String SQL_INSERT_INTO_CARD =
             "INSERT INTO CARD (number, card_type, pay_system, is_active, account_id ) Values (?, ?, ?, ?, ?)";
+    private final static String SQL_FIND_CARDS_BY_ACCOUNT_ID =
+            "SELECT * FROM CARD WHERE ACCOUNT_ID = ? ";
 
 
     @Override
     public Optional<Card> findById(int id) {
         return Optional.empty();
     }
+
 
     @Override
     public void save(Card card) {
@@ -37,7 +38,7 @@ public class CardDaoImpl implements CardDao {
             preparedStatement.setBoolean(4, card.isActive());
             preparedStatement.setInt(5, card.getAccountId());
             preparedStatement.executeUpdate();
-        } catch (SQLException | FileNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -53,20 +54,47 @@ public class CardDaoImpl implements CardDao {
     }
 
     @Override
-    public List<Card> findAll() throws SQLException, FileNotFoundException {
-        Connection connection = DatabaseConfig.getConnection();
+    public List<Card> findAll() {
         List<Card> listOfCards = new ArrayList<>();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL);
-        while (resultSet.next()) {
-            listOfCards.add(new Card(
-                    resultSet.getString(2),
-                    CardType.valueOf(resultSet.getString(3)),
-                    PaySystem.valueOf(resultSet.getString(4)),
-                    resultSet.getBoolean(5),
-                    resultSet.getInt(6)));
-        }
 
+        try (Connection connection = DatabaseConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL)) {
+
+            while (resultSet.next()) {
+                listOfCards.add(new Card(
+                        resultSet.getString(2),
+                        CardType.valueOf(resultSet.getString(3)),
+                        PaySystem.valueOf(resultSet.getString(4)),
+                        resultSet.getBoolean(5),
+                        resultSet.getInt(6)));
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return listOfCards;
+    }
+
+    @Override
+    public List<Card> findCardsByAccountId(int accountId) {
+        List<Card> listOfCards = new ArrayList<>();
+
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_CARDS_BY_ACCOUNT_ID)) {
+            preparedStatement.setInt(1, accountId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                listOfCards.add(new Card(
+                        resultSet.getString(2),
+                        CardType.valueOf(resultSet.getString(3)),
+                        PaySystem.valueOf(resultSet.getString(4)),
+                        resultSet.getBoolean(5),
+                        resultSet.getInt(6)));
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
         return listOfCards;
     }
 }

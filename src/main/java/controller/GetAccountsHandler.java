@@ -5,8 +5,12 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import config.ServerConfig;
 import entity.Account;
+import org.h2.util.json.JSONArray;
 import service.AccountService;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
@@ -21,27 +25,16 @@ public class GetAccountsHandler implements HttpHandler {
     }
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException { //todo make JSON serializer
-
+    public void handle(HttpExchange exchange) { //todo make JSON serializer
         ObjectMapper objectMapper = new ObjectMapper();
-        ArrayNode arrayNode = objectMapper.createArrayNode();
-
         try {
             List<Account> accountList = accountService.findAll();
-            for (Account account : accountList) {
-                ObjectNode objectNode = objectMapper.createObjectNode();
-                objectNode.put("account", account.getAccount());
-                objectNode.put("balance", account.getBalance());
-                objectNode.put("isOpen", account.isOpen());
-                arrayNode.add(objectNode);
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
+            String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(accountList);
+            exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
+            OutputStream outputStream = exchange.getResponseBody();
+            outputStream.write(jsonResponse.getBytes());
+        } catch (SQLException | IOException exception) {
+            exception.printStackTrace();
         }
-
-        String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(arrayNode);
-        exchange.sendResponseHeaders(200, jsonResponse.length());
-        OutputStream outputStream = exchange.getResponseBody();
-        outputStream.write(jsonResponse.getBytes());
     }
 }

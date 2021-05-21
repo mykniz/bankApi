@@ -1,7 +1,9 @@
 package controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import config.ServerConfig;
 import converters.*;
 import dto.TopUpRequestDto;
 import entity.Account;
@@ -24,32 +26,28 @@ public class TopUpHandler implements HttpHandler {
     }
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(HttpExchange exchange) {
 
-        InputStreamReader inputStreamReader = new InputStreamReader(exchange.getRequestBody());
-        BufferedReader br = new BufferedReader(inputStreamReader);
-        String body = br.readLine();
-        Map<String, String> map = RequestBodyToMapParser.requestBodyToMap(body);
-
-        int accountId = Integer.parseInt(map.get("accountId"));
-        BigDecimal value = BigDecimal.valueOf(Long.parseLong(map.get("value")));
-
-        TopUpRequestDto topUpRequestDto = new TopUpRequestDto(accountId,value);
-
-        Account account = null;
-
+        ObjectMapper objectMapper = new ObjectMapper();
         try {
-            accountService.topUp(topUpRequestDto);
-            account = accountService.findById(accountId);
-        } catch (Exception e) {
+            InputStreamReader inputStreamReader = new InputStreamReader(exchange.getRequestBody());
+            BufferedReader br = new BufferedReader(inputStreamReader);
+            String body = br.readLine();
+            Map<String, String> map = RequestBodyToMapParser.requestBodyToMap(body);
+
+            int accountId = Integer.parseInt(map.get("accountId"));
+            BigDecimal value = BigDecimal.valueOf(Long.parseLong(map.get("value")));
+      //      TopUpRequestDto topUpRequestDto = new TopUpRequestDto(accountId,value);
+
+            accountService.topUp(accountId, value);
+            Account account = accountService.findById(accountId);
+
+            String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(account);
+            exchange.sendResponseHeaders(ServerConfig.STATUS_OK, jsonResponse.length());
+            OutputStream outputStream = exchange.getResponseBody();
+            outputStream.write(jsonResponse.getBytes());
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
-        log.info(account.toString());
-
-        String jsonResponse = map.toString();
-        exchange.sendResponseHeaders(200, jsonResponse.length());
-        OutputStream outputStream = exchange.getResponseBody();
-        outputStream.write(jsonResponse.getBytes());
     }
 }

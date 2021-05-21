@@ -18,7 +18,7 @@ insert into ACCOUNT (account, balance, is_open, user_id) values ('11857403379971
 insert into ACCOUNT (account, balance, is_open, user_id) values ('11469926864721322302', 4000000.00, true, 1);
 insert into ACCOUNT (account, balance, is_open, user_id) values ('72337103411062027578', 5000000.00, true, 1);
 insert into ACCOUNT (account, balance, is_open, user_id) values ('82794100317667558707', 6000000.00, true, 1);
-insert into ACCOUNT (account, balance, is_open, user_id) values ('03217462696778617732', 200.00, true, 2);
+insert into ACCOUNT (account, balance, is_open, user_id) values ('03217462696778617732', 0.00, true, 2);
 insert into ACCOUNT (account, balance, is_open, user_id) values ('59485826106631327503', 62275005.67, true, 3);
 insert into ACCOUNT (account, balance, is_open, user_id) values ('69756317540546747828', 370843929.94, true, 3);
 insert into ACCOUNT (account, balance, is_open, user_id) values ('92396319335214821062', 888979325.03, true, 4);

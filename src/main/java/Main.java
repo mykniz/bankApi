@@ -22,7 +22,7 @@ public class Main {
         CardDao cardDao = new CardDaoImpl();
 
         UserService userService = new UserService(userDao);
-        AccountService accountService = new AccountService(accountDao);
+        AccountService accountService = new AccountService(accountDao, userDao);
         CardService cardService = new CardService(cardDao);
 
         ServerConfig.startServer(userService,cardService,accountService);

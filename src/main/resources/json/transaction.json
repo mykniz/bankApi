@@ -1,5 +1,5 @@
 {
-  "accountId": "1",
-  "phoneNumber": "+7 712-305-9426",
-  "value": "99"
+  "accountIdFrom": "1",
+  "accountIdTo": "7",
+  "value": "1"
 }

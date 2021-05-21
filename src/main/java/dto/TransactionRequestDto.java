@@ -4,22 +4,22 @@ import java.math.BigDecimal;
 
 public class TransactionRequestDto {
 
-    private final int accountId;
-    private final String phoneNumber;
+    private final int accountIdFrom;
+    private final int accountIdTo;
     private final BigDecimal value;
 
-    public TransactionRequestDto(int accountId, String phoneNumber, BigDecimal sum) {
-        this.accountId = accountId;
-        this.phoneNumber = phoneNumber;
-        this.value = sum;
+    public TransactionRequestDto(int accountIdFrom, int accountIdTo, BigDecimal value) {
+        this.accountIdFrom = accountIdFrom;
+        this.accountIdTo = accountIdTo;
+        this.value = value;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public int getAccountIdFrom() {
+        return accountIdFrom;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public int getAccountIdTo() {
+        return accountIdTo;
     }
 
     public BigDecimal getValue() {

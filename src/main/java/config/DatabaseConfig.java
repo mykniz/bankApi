@@ -15,10 +15,12 @@ public class DatabaseConfig {
     private final static String SQL_USER_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/USER.sql";
     private final static String SQL_ACCOUNT_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/ACCOUNT.sql";
     private final static String SQL_CARD_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/CARD.sql";
+    private final static String SQL_CONTRACTOR_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/CONTRACTOR.sql";
+
 
     private static final Logger log = Logger.getLogger(DatabaseConfig.class.getName());
 
-    public static Connection getConnection() throws FileNotFoundException, SQLException {
+    public static Connection getConnection() {
         Connection connection = null;
         try (InputStream inputStream = new FileInputStream(PROPERTIES_PATH)) {
             Properties properties = new Properties();
@@ -35,7 +37,6 @@ public class DatabaseConfig {
         } catch (IOException | SQLException | ClassNotFoundException e) {
             throw new IllegalStateException();
         }
-
         log.info("connection to DB established");
         return connection;
     }
@@ -45,6 +46,7 @@ public class DatabaseConfig {
             RunScript.execute(connection, new FileReader(SQL_USER_SCRIPT_PATH));
             RunScript.execute(connection, new FileReader(SQL_ACCOUNT_SCRIPT_PATH));
             RunScript.execute(connection, new FileReader(SQL_CARD_SCRIPT_PATH));
+            RunScript.execute(connection, new FileReader(SQL_CONTRACTOR_SCRIPT_PATH));
         } catch (SQLException | FileNotFoundException e) {
             e.printStackTrace();
         }
