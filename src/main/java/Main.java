@@ -3,7 +3,7 @@ import config.ServerConfig;
 import dao.*;
 import service.AccountService;
 import service.CardService;
-import service.UserService;
+import service.ClientService;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -14,14 +14,14 @@ public class Main {
 
         DatabaseConfig.createTables();
 
-        UserDao userDao = new UserDaoImpl();
+        ClientDao clientDao = new ClientDaoImpl();
         AccountDao accountDao = new AccountDaoImpl();
         CardDao cardDao = new CardDaoImpl();
 
-        UserService userService = new UserService(userDao);
-        AccountService accountService = new AccountService(accountDao, userDao);
+        ClientService clientService = new ClientService(clientDao);
+        AccountService accountService = new AccountService(accountDao, clientDao);
         CardService cardService = new CardService(cardDao);
 
-        ServerConfig.startServer(userService,cardService,accountService);
+        ServerConfig.startServer(clientService,cardService,accountService);
     }
 }

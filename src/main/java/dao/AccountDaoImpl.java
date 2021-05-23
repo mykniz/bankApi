@@ -6,6 +6,7 @@ import entity.Card;
 import entity.CardType;
 import entity.PaySystem;
 import exception.AccountDaoException;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class AccountDaoImpl implements AccountDao {
 
     private final static String SQL_FIND_BY_ID = "SELECT * FROM ACCOUNT WHERE ACCOUNT_ID = ?";
     private final static String SQL_FIND_ALL = "SELECT * FROM ACCOUNT";
+    private final static String SQL_INSERT_INTO_ACCOUNT = "insert into ACCOUNT (ACCOUNT_ID, ACCOUNT, BALANCE, IS_OPEN, CLIENT_ID) values (DEFAULT, ?, ?, ?, ?)";
     private final static String SQL_UPDATE_BALANCE = "UPDATE ACCOUNT SET BALANCE = ? WHERE ACCOUNT_ID = ?";
     private final static String SQL_FIND_ALL_ACCOUNT_CARDS = "SELECT * FROM CARD as c JOIN ACCOUNT A on A.ACCOUNT_ID = c.ACCOUNT_ID where A.ACCOUNT_ID = ?";
 
@@ -47,7 +49,7 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
-    public List<Account> findAll() {                      //todo check CARD LIST
+    public List<Account> findAll() {
         List<Account> accountList = new ArrayList<>();
         try (Connection connection = DatabaseConfig.getConnection();
              Statement statement = connection.createStatement();
@@ -59,7 +61,7 @@ public class AccountDaoImpl implements AccountDao {
                         resultSet.getBigDecimal(3),
                         resultSet.getBoolean(4),
                         resultSet.getInt(5),
-                        getAccountCards(accountId, connection)));   //todo add connection parametr
+                        getAccountCards(accountId, connection)));
             }
         } catch (SQLException exception) {
             exception.printStackTrace();
@@ -69,6 +71,19 @@ public class AccountDaoImpl implements AccountDao {
 
     @Override
     public void save(Account account) {
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_INTO_ACCOUNT)) {
+            connection.setSavepoint("start saving account");
+            connection.setAutoCommit(false);
+            preparedStatement.setString(1, account.getAccount());
+            preparedStatement.setBigDecimal(2, account.getBalance());
+            preparedStatement.setBoolean(3, account.isOpen());
+            preparedStatement.setInt(4, account.getClientId());
+            preparedStatement.execute();
+            connection.commit();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override

@@ -1,26 +1,20 @@
 package controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import converter.*;
+import converter.HttpExchangeToMapParser;
+import converter.JsonResponseParser;
 import dto.AddContractorRequestDto;
-import entity.User;
-import service.UserService;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.sql.SQLException;
+import entity.Client;
+import service.ClientService;
 import java.util.List;
 import java.util.Map;
 
 public class AddContractorHandler implements HttpHandler {
-    private final UserService userService;
+    private final ClientService clientService;
 
-    public AddContractorHandler(UserService userService) {
-        this.userService = userService;
+    public AddContractorHandler(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     /**
@@ -29,30 +23,13 @@ public class AddContractorHandler implements HttpHandler {
      */
     @Override
     public void handle(HttpExchange exchange) {
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            InputStreamReader inputStreamReader = new InputStreamReader(exchange.getRequestBody());
-            BufferedReader br = new BufferedReader(inputStreamReader);
-            String body = br.readLine();
-            Map<String, String> map = RequestBodyToMapParser.requestBodyToMap(body);
-
-            int userId = Integer.parseInt(map.get("userId"));
-            int contractorId = Integer.parseInt(map.get("contractorId"));
-
-            AddContractorRequestDto addContractorRequestDto = new AddContractorRequestDto(userId, contractorId);
-
-            userService.addContractor(addContractorRequestDto);
-            List<User> userList = userService.findAll();
-
-            String jsonResponse = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(userList);
-            exchange.sendResponseHeaders(200, jsonResponse.length());
-            OutputStream outputStream = exchange.getResponseBody();
-            outputStream.write(jsonResponse.getBytes());
-            exchange.close();
-        } catch (SQLException | IOException exception) {
-            exception.printStackTrace();
-        }
+        Map<String, String> map = HttpExchangeToMapParser.httpExchangeToMap(exchange);
+        int clientId = Integer.parseInt(map.get("clientId"));
+        int contractorId = Integer.parseInt(map.get("contractorId"));
+        AddContractorRequestDto addContractorRequestDto = new AddContractorRequestDto(clientId, contractorId);
+        clientService.addContractor(addContractorRequestDto);
+        List<Client> clientList = clientService.findAll();
+        JsonResponseParser.toJsonResponse(exchange, clientList);
     }
 
 }

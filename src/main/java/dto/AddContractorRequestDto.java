@@ -2,16 +2,16 @@ package dto;
 
 public class AddContractorRequestDto {
 
-    private final int userId;
+    private final int clientId;
     private final int contractorId;
 
-    public AddContractorRequestDto(int userId, int contractorId) {
-        this.userId = userId;
+    public AddContractorRequestDto(int clientId, int contractorId) {
+        this.clientId = clientId;
         this.contractorId = contractorId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getClientId() {
+        return clientId;
     }
 
     public int getContractorId() {

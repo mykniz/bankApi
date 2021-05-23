@@ -1,29 +1,34 @@
 package service;
 
 import dao.AccountDao;
-import dao.UserDao;
+import dao.ClientDao;
+import dto.AccountRequestDto;
 import dto.TransactionRequestDto;
 import entity.Account;
+import entity.Card;
+import entity.Client;
 import entity.Contractor;
-import entity.User;
 
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
 public class AccountService {
     private static final Logger log = Logger.getLogger(AccountService.class.getName());
+    private static final int ACCOUNT_NUMBER_LENGTH = 20;
+    private static final int CARD_DIGITS = 10;
     private final AccountDao accountDao;
-    private final UserDao userDao;
+    private final ClientDao clientDao;
 
-    public AccountService(AccountDao accountDao, UserDao userDao) {
+    public AccountService(AccountDao accountDao, ClientDao clientDao) {
         this.accountDao = accountDao;
-        this.userDao = userDao;
+        this.clientDao = clientDao;
     }
 
-    public List<Account> findAll() throws SQLException, FileNotFoundException {
+    public List<Account> findAll() {
         return accountDao.findAll();
     }
 
@@ -39,21 +44,24 @@ public class AccountService {
             Account accountFrom = accountDao.findById(accountIdFrom).orElseThrow(() -> new RuntimeException("account not found"));
             Account accountTo = accountDao.findById(accountIdTo).orElseThrow(() -> new RuntimeException("account not found"));
             if (accountFrom.isOpen() && accountTo.isOpen()) {
-                User userFrom = userDao.findById(accountFrom.getUserId()).orElseThrow(() -> new RuntimeException("user not found"));
-                User userTo = userDao.findById(accountTo.getUserId()).orElseThrow(() -> new RuntimeException("user not found"));
-                List<Contractor> contractorList = userFrom.getContractorsList();
-                for (Contractor c : contractorList) {
-                    if (c.getContractorId() == userTo.getUserId()) {
-                        BigDecimal value = transactionRequestDto.getValue();
-                        BigDecimal balanceFrom = accountFrom.getBalance();
-                        if (balanceFrom.compareTo(value) >= 0) {
-                            charge(accountIdFrom, value);
-                            topUp(accountIdTo, value);
+                Client clientFrom = clientDao.findById(accountFrom.getClientId()).orElseThrow(() -> new RuntimeException("client not found"));
+                List<Contractor> contractorList = clientFrom.getContractorsList();
+                if (contractorList.isEmpty()) {
+                    throw new RuntimeException("no contractors to transfer money");
+                } else {
+                    for (Contractor c : contractorList) {
+                        if (c.getContractorId() == accountTo.getClientId()) {   //TODO FIXED LINE
+                            BigDecimal value = transactionRequestDto.getValue();
+                            BigDecimal balanceFrom = accountFrom.getBalance();
+                            if (balanceFrom.compareTo(value) >= 0) {
+                                charge(accountIdFrom, value);
+                                topUp(accountIdTo, value);
+                            } else {
+                                log.info("not enough money on balance");
+                            }
                         } else {
-                            log.info("not enough money on balance");
+                            log.info("contractor not found");
                         }
-                    } else {
-                        log.info("contractor not found");
                     }
                 }
             } else {
@@ -73,10 +81,38 @@ public class AccountService {
     }
 
     public void topUp(int accountIdTo, BigDecimal value) {
-        accountDao.findById(accountIdTo).ifPresent(account -> {
-            BigDecimal balance = account.getBalance();
-            balance = balance.add(value);
-            accountDao.updateBalance(accountIdTo, balance);
-        });
+
+        Optional<Account> optionalAccount = accountDao.findById(accountIdTo);
+        if (optionalAccount.isPresent()) {
+            Account account = optionalAccount.get();
+            if (account.isOpen()) {
+                BigDecimal balance = account.getBalance();
+                balance = balance.add(value);
+                accountDao.updateBalance(accountIdTo, balance);
+            } else {
+                log.info("Warning! Account is not opened!");
+            }
+        } else {
+            log.info("Warning! Account does not exists!");
+        }
+    }
+
+    public void addAccount(AccountRequestDto accountRequestDto) {
+        String cardNumber = generateAccountNumber();
+        BigDecimal balance = BigDecimal.ZERO;
+        boolean isOpen = true;
+        int clientId = accountRequestDto.getClientId();
+        List<Card> cardList = new ArrayList<>();
+        Account account = new Account(cardNumber, balance, isOpen, clientId, cardList);
+        accountDao.save(account);
+    }
+
+    private static String generateAccountNumber() {
+        StringBuilder stringBuilder = new StringBuilder();
+        ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current(); //todo check method how works
+        for (int i = 0; i < ACCOUNT_NUMBER_LENGTH; i++) {
+            stringBuilder.append(threadLocalRandom.nextInt(CARD_DIGITS));
+        }
+        return stringBuilder.toString();
     }
 }

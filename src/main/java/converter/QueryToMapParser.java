@@ -7,8 +7,8 @@ public class QueryToMapParser {
 
     /**
      * parse URI parameters to map
-     * @param query
-     * @return
+     * @param query String from URI query
+     * @return map with params
      */
     public static Map<String, String> queryToMap(String query) {
         Map<String, String> result = new HashMap();

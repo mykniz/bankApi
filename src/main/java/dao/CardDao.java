@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface CardDao extends CrudDao<Card> {
 
     List<Card> findCardsByAccountId(int accountId);
+
+    void updateStatus(String number, boolean b);
 }

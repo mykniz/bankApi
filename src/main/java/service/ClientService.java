@@ -1,0 +1,57 @@
+package service;
+
+import dao.ClientDao;
+import dto.AddContractorRequestDto;
+import dto.ClientBankInfoResponseDto;
+import dto.ClientRequestDto;
+import entity.Account;
+import entity.Client;
+import entity.Contractor;
+
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
+public class ClientService {
+    private static final Logger log = Logger.getLogger(ClientService.class.getName());
+    private final ClientDao clientDao;
+
+    public ClientService(ClientDao clientDao) {
+        this.clientDao = clientDao;
+    }
+
+    public List<Client> findAll() {
+        return clientDao.findAll();
+    }
+    public List<ClientBankInfoResponseDto> findClientsBankInfo() {
+        return clientDao.findClientsBankInfo();
+    }
+
+    public void addContractor(AddContractorRequestDto addContractorRequestDto) {
+
+        int clientId = addContractorRequestDto.getClientId();
+        int contractorId = addContractorRequestDto.getContractorId();
+
+        if(clientId != contractorId) {
+         Client contractor = clientDao.findById(contractorId).orElseThrow(() -> new RuntimeException("client not found"));
+         clientDao.saveContractor(contractor, clientId ,contractorId);
+        }
+    }
+
+    public void addClient(ClientRequestDto clientRequestDto) {
+        String phoneNumber = clientRequestDto.getPhoneNumber();
+
+        if(clientDao.findByPhoneNumber(phoneNumber).isPresent()) {
+            log.info("cliet already exists");
+        } else {
+            String firstName = clientRequestDto.getFirstName();
+            String lastName = clientRequestDto.getLastName();
+            List<Contractor> contractorList = new ArrayList<>();
+            List<Account> accountList = new ArrayList<>();
+            Client client = new Client(firstName, lastName, phoneNumber, contractorList, accountList);
+            clientDao.save(client);
+        }
+    }
+}

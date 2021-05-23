@@ -5,14 +5,14 @@ public class Contractor {
     private final String firstName;
     private final String lastName;
     private final String phoneNumber;
-    private final int userId;
+    private final int clientId;
     private final int contractorId;
 
-    public Contractor(String firstName, String lastName, String phoneNumber, int userId, int contractorId) {
+    public Contractor(String firstName, String lastName, String phoneNumber, int clientId, int contractorId) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
-        this.userId = userId;
+        this.clientId = clientId;
         this.contractorId = contractorId;
     }
 
@@ -28,8 +28,8 @@ public class Contractor {
         return phoneNumber;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getClientId() {
+        return clientId;
     }
 
     public int getContractorId() {
@@ -42,7 +42,7 @@ public class Contractor {
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", userId=" + userId +
+                ", clientId=" + clientId +
                 ", contractorId=" + contractorId +
                 '}';
     }

@@ -3,26 +3,20 @@ package entity;
 import java.util.List;
 import java.util.Objects;
 
-public class User {
+public class Client {
 
-    private final int userId;
     private final String firstName;
     private final String lastName;
     private final String phoneNumber;
     private List<Contractor> contractorsList;
     private List<Account> accountList;
 
-    public User(int userId, String firstName, String lastName, String phoneNumber, List<Contractor> contractorsList, List<Account> accountList) {
-        this.userId = userId;
+    public Client(String firstName, String lastName, String phoneNumber, List<Contractor> contractorsList, List<Account> accountList) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.contractorsList = contractorsList;
         this.accountList = accountList;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 
     public String getFirstName() {
@@ -55,9 +49,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", firstName='" + firstName + '\'' +
+        return "Client{" +
+                "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", contractorsList=" + contractorsList +
@@ -69,12 +62,12 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return userId == user.userId && firstName.equals(user.firstName) && lastName.equals(user.lastName) && phoneNumber.equals(user.phoneNumber) && contractorsList.equals(user.contractorsList) && accountList.equals(user.accountList);
+        Client client = (Client) o;
+        return firstName.equals(client.firstName) && lastName.equals(client.lastName) && phoneNumber.equals(client.phoneNumber) && contractorsList.equals(client.contractorsList) && accountList.equals(client.accountList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, firstName, lastName, phoneNumber, contractorsList, accountList);
+        return Objects.hash(firstName, lastName, phoneNumber, contractorsList, accountList);
     }
 }

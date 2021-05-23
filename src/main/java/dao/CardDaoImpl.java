@@ -4,6 +4,8 @@ import config.DatabaseConfig;
 import entity.Card;
 import entity.CardType;
 import entity.PaySystem;
+import exception.AccountDaoException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,8 @@ public class CardDaoImpl implements CardDao {
             "INSERT INTO CARD (number, card_type, pay_system, is_active, account_id ) Values (?, ?, ?, ?, ?)";
     private final static String SQL_FIND_CARDS_BY_ACCOUNT_ID =
             "SELECT * FROM CARD WHERE ACCOUNT_ID = ? ";
+    private final static String SQL_UPDATE_CARD_STATUS = "UPDATE CARD SET IS_ACTIVE = ? WHERE NUMBER= ?";
+
 
 
     @Override
@@ -93,6 +97,24 @@ public class CardDaoImpl implements CardDao {
     @Override
     public void update(Card card) {
 
+    }
+
+    @Override
+    public void updateStatus(String number, boolean b) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
+            Savepoint savepoint = connection.setSavepoint("ready to update card status");
+            try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_CARD_STATUS)) {
+                connection.setAutoCommit(false);
+                preparedStatement.setBoolean(1, b);
+                preparedStatement.setString(2,number);
+                preparedStatement.executeUpdate();
+                connection.commit();
+            } catch (SQLException exception) {
+                connection.rollback(savepoint);
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
     }
 
     @Override

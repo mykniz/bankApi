@@ -4,18 +4,18 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class Account {
-    //todo accountId
-    private final String account;
-    private BigDecimal balance;
-    private boolean isOpen;
-    private final int userId;
-    private List<Card> cardList;
 
-    public Account(String account, BigDecimal balance, boolean isOpen, int userId, List<Card> cardList) {
+    private final String account;
+    private final BigDecimal balance;
+    private boolean isOpen;
+    private final int clientId;
+    private final List<Card> cardList;
+
+    public Account(String account, BigDecimal balance, boolean isOpen, int clientId, List<Card> cardList) {
         this.account = account;
         this.balance = balance;
         this.isOpen = isOpen;
-        this.userId = userId;
+        this.clientId = clientId;
         this.cardList = cardList;
     }
 
@@ -27,10 +27,6 @@ public class Account {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
     public boolean isOpen() {
         return isOpen;
     }
@@ -39,16 +35,12 @@ public class Account {
         isOpen = open;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getClientId() {
+        return clientId;
     }
 
     public List<Card> getCardList() {
         return cardList;
-    }
-
-    public void setCardList(List<Card> cardList) {
-        this.cardList = cardList;
     }
 
     @Override
@@ -57,7 +49,7 @@ public class Account {
                 "account='" + account + '\'' +
                 ", balance=" + balance +
                 ", isOpen=" + isOpen +
-                ", userId=" + userId +
+                ", clientId=" + clientId +
                 ", cardList=" + cardList +
                 '}';
     }

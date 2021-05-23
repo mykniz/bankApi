@@ -5,11 +5,17 @@ curl -X GET  "http://localhost:8000/cards/order?cardType=DEBET&paySystem=VISA&ac
 
 curl -X POST http://localhost:8000/cards/order -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/cardOrder.json
 
-curl -X POST http://localhost:8000/accounts/topUp -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/topup.json
+curl -X POST http://localhost:8000/accounts/topUpBalance -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/topup.json
 
 
 curl -X GET "http://localhost:8000/accounts/check?accountId=7"
 
 curl -X POST http://localhost:8000/accounts/transactions -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/transaction.json
 
-curl -X POST http://localhost:8000/users/addContractor -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/addContractor.json
+curl -X POST http://localhost:8000/clients/addContractor -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/addContractor.json
+
+curl -u admin:192837465 -X POST http://localhost:8000/admin/addClient -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/addClient.json
+
+curl -u admin:192837465 -X POST http://localhost:8000/admin/addAccount -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/addAccount.json
+
+curl -u admin:192837465 -X POST http://localhost:8000/admin/cardOderApprove -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/cardOderApprove.json
