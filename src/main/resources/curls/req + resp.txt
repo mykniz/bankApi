@@ -1,21 +1,11 @@
 
-curl -X GET http://localhost:8000/cards
-
-curl -X GET  "http://localhost:8000/cards/order?cardType=DEBET&paySystem=VISA&accountId=2"
-
-curl -X POST http://localhost:8000/cards/order -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/cardOrder.json
-
-curl -X POST http://localhost:8000/accounts/topUpBalance -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/topup.json
-
-
-curl -X GET "http://localhost:8000/accounts/check?accountId=7"
-
-curl -X POST http://localhost:8000/accounts/transactions -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/transaction.json
-
-curl -X POST http://localhost:8000/clients/addContractor -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/addContractor.json
+curl -X POST http://localhost:8000/client/addContractor -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/addContractor.json
+curl -X POST http://localhost:8000/account/topUpBalance -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/topup.json
+curl -X GET "http://localhost:8000/account/checkBalance?accountId=3"
+curl -X POST http://localhost:8000/account/transactions -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/transaction.json
+curl -X POST http://localhost:8000/card/order -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/cardOrder.json
 
 curl -u admin:192837465 -X POST http://localhost:8000/admin/addClient -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/addClient.json
-
 curl -u admin:192837465 -X POST http://localhost:8000/admin/addAccount -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/addAccount.json
-
 curl -u admin:192837465 -X POST http://localhost:8000/admin/cardOderApprove -H "Content-Type: application/json" -d @/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/json/cardOderApprove.json
+curl -u admin:192837465 -X GET http://localhost:8000/admin/getAllClients

@@ -15,10 +15,12 @@ import java.util.logging.Logger;
 public class DatabaseConfig {
 
     private final static String PROPERTIES_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/db.properties";
-    private final static String SQL_USER_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/CLIENT.sql";
-    private final static String SQL_ACCOUNT_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/ACCOUNT.sql";
-    private final static String SQL_CARD_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/CARD.sql";
-    private final static String SQL_CONTRACTOR_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/CONTRACTOR.sql";
+    private final static String SQL_USER_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/client.sql";
+    private final static String SQL_ACCOUNT_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/account.sql";
+    private final static String SQL_CARD_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/card.sql";
+    private final static String SQL_CONTRACTOR_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/contractor.sql";
+    private final static String SQL_TRANSACTION_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/transaction.sql";
+
     private static final Logger log = Logger.getLogger(DatabaseConfig.class.getName());
 
     /**
@@ -54,6 +56,7 @@ public class DatabaseConfig {
             RunScript.execute(connection, new FileReader(SQL_CONTRACTOR_SCRIPT_PATH));
             RunScript.execute(connection, new FileReader(SQL_ACCOUNT_SCRIPT_PATH));
             RunScript.execute(connection, new FileReader(SQL_CARD_SCRIPT_PATH));
+            RunScript.execute(connection, new FileReader(SQL_TRANSACTION_SCRIPT_PATH));
 
 
         } catch (SQLException | FileNotFoundException e) {

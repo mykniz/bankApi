@@ -14,12 +14,15 @@ class ClientDaoImplTest {
     @Test
     void findById() {
 
-      //  Assertions.assertEquals(1, new ClientDaoImpl().findById(1).get().getClientId());
+        String name = "Leo";
+        Assertions.assertEquals(name, new ClientDaoImpl().findById(1).get().getFirstName());
 
     }
 
     @Test
     void findAll() {
+        int clientsAmount = 4;
+        Assertions.assertEquals(clientsAmount, new ClientDaoImpl().findAll().size());
     }
 
     @Test

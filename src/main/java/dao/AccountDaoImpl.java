@@ -5,8 +5,6 @@ import entity.Account;
 import entity.Card;
 import entity.CardType;
 import entity.PaySystem;
-import exception.AccountDaoException;
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -101,7 +99,6 @@ public class AccountDaoImpl implements AccountDao {
                 connection.commit();
             } catch (SQLException exception) {
                 connection.rollback(savepoint);
-                throw new AccountDaoException("exception with statement. Code error = " + exception.getErrorCode());
             }
         } catch (SQLException exception) {
             exception.printStackTrace();

@@ -2,27 +2,43 @@ package controller;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import config.ServerConfig;
 import converter.HttpExchangeToMapParser;
 import converter.JsonResponseParser;
 import dto.AddContractorRequestDto;
 import entity.Client;
 import service.ClientService;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class AddContractorHandler implements HttpHandler {
+public class ClientController implements HttpHandler {
+
+    private static final String ADD_CONTRACTOR = "/client/addContractor";
     private final ClientService clientService;
 
-    public AddContractorHandler(ClientService clientService) {
+    public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
 
-    /**
-     * Receives contractor JSON from POST method and return JSON array of users
-     * @param exchange
-     */
     @Override
     public void handle(HttpExchange exchange) {
+        String method = exchange.getRequestMethod();
+        String path = exchange.getRequestURI().getPath();
+        switch (method) {
+            case ServerConfig.GET:
+
+            case ServerConfig.POST:
+                switch (path) {
+                    case ADD_CONTRACTOR:
+                        addContractorHandler(exchange);
+                        break;
+                }
+        }
+    }
+
+    private void addContractorHandler(HttpExchange exchange) {
         Map<String, String> map = HttpExchangeToMapParser.httpExchangeToMap(exchange);
         int clientId = Integer.parseInt(map.get("clientId"));
         int contractorId = Integer.parseInt(map.get("contractorId"));
@@ -33,4 +49,3 @@ public class AddContractorHandler implements HttpHandler {
     }
 
 }
-

@@ -4,8 +4,6 @@ import config.DatabaseConfig;
 import entity.Card;
 import entity.CardType;
 import entity.PaySystem;
-import exception.AccountDaoException;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

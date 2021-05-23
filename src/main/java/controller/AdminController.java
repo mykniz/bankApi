@@ -17,24 +17,21 @@ import service.ClientService;
 import java.util.List;
 import java.util.Map;
 
-public class AuthHandler implements HttpHandler {
+public class AdminController implements HttpHandler {
 
     private static final String ADD_CLIENT = "/admin/addClient";
     private static final String ADD_ACCOUNT = "/admin/addAccount";
     private static final String CARD_ORDER_APPROVE = "/admin/cardOderApprove";
     private static final String TRANSACTION_APPROVE = "/admin/transactionApprove";
-
-    private static final String FIND_ALL_CLIENTS = "/admin/clients";
-    private static final String FIND_ALL_CLIENTS_BANK_INFO = "/admin/clients/bankInfo";
-    private static final String FIND_ALL_ACCOUNTS = "/admin/accounts";
-    private static final String FIND_ALL_CARDS = "/admin/cards";
-
+    private static final String FIND_ALL_CLIENTS = "/admin/getAllClients";
+    private static final String FIND_ALL_CLIENTS_BANK_INFO = "/admin/clients/getAllClientsBankInfo";
+    private static final String FIND_ALL_ACCOUNTS = "/admin/getAllAccounts";
+    private static final String FIND_ALL_CARDS = "/admin/getAllCards";
     private final ClientService clientService;
     private final AccountService accountService;
     private final CardService cardService;
 
-
-    public AuthHandler(ClientService clientService, AccountService accountService, CardService cardService) {
+    public AdminController(ClientService clientService, AccountService accountService, CardService cardService) {
         this.clientService = clientService;
         this.accountService = accountService;
         this.cardService = cardService;
