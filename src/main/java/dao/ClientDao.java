@@ -2,6 +2,7 @@ package dao;
 
 import dto.ClientBankInfoResponseDto;
 import entity.Client;
+import entity.Contractor;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,5 +13,5 @@ public interface ClientDao extends CrudDao<Client> {
 
     Optional<Client> findByPhoneNumber(String phoneNumber);
 
-    void saveContractor(Client contractor, int userId, int contractorId);
+    void saveContractor(Contractor contractor);
 }

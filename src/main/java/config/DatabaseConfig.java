@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class DatabaseConfig {
 
     private final static String PROPERTIES_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/db.properties";
-    private final static String SQL_USER_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/client.sql";
+    private final static String SQL_CLIENT_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/client.sql";
     private final static String SQL_ACCOUNT_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/account.sql";
     private final static String SQL_CARD_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/card.sql";
     private final static String SQL_CONTRACTOR_SCRIPT_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/scripts/contractor.sql";
@@ -52,7 +52,7 @@ public class DatabaseConfig {
      */
     public static void createTables() {
         try (Connection connection = DatabaseConfig.getConnection()) {
-            RunScript.execute(connection, new FileReader(SQL_USER_SCRIPT_PATH));
+            RunScript.execute(connection, new FileReader(SQL_CLIENT_SCRIPT_PATH));
             RunScript.execute(connection, new FileReader(SQL_CONTRACTOR_SCRIPT_PATH));
             RunScript.execute(connection, new FileReader(SQL_ACCOUNT_SCRIPT_PATH));
             RunScript.execute(connection, new FileReader(SQL_CARD_SCRIPT_PATH));

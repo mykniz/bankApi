@@ -150,7 +150,7 @@ public class ClientDaoImpl implements ClientDao {
     }
 
     @Override
-    public void saveContractor(Client contractor, int clientId, int contractorId) {
+    public void saveContractor(Contractor contractor) {
         try (Connection connection = DatabaseConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_INTO_CONTRACTOR)) {
             connection.setSavepoint("start saving contractor");
@@ -158,8 +158,8 @@ public class ClientDaoImpl implements ClientDao {
             preparedStatement.setString(1, contractor.getFirstName());
             preparedStatement.setString(2, contractor.getLastName());
             preparedStatement.setString(3, contractor.getPhoneNumber());
-            preparedStatement.setInt(4, clientId);
-            preparedStatement.setInt(5, contractorId);
+            preparedStatement.setInt(4, contractor.getClientId());
+            preparedStatement.setInt(5, contractor.getContractorId());
             preparedStatement.execute();
             connection.commit();
         } catch (SQLException exception) {

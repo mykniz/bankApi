@@ -8,8 +8,6 @@ import converter.JsonResponseParser;
 import dto.AddContractorRequestDto;
 import entity.Client;
 import service.ClientService;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +43,7 @@ public class ClientController implements HttpHandler {
         AddContractorRequestDto addContractorRequestDto = new AddContractorRequestDto(clientId, contractorId);
         clientService.addContractor(addContractorRequestDto);
         List<Client> clientList = clientService.findAll();
+      //  JsonResponseParser.toJsonResponse(exchange, "test");
         JsonResponseParser.toJsonResponse(exchange, clientList);
     }
 

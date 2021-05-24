@@ -7,9 +7,6 @@ import dto.ClientRequestDto;
 import entity.Account;
 import entity.Client;
 import entity.Contractor;
-
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -35,8 +32,9 @@ public class ClientService {
         int contractorId = addContractorRequestDto.getContractorId();
 
         if(clientId != contractorId) {
-         Client contractor = clientDao.findById(contractorId).orElseThrow(() -> new RuntimeException("client not found"));
-         clientDao.saveContractor(contractor, clientId ,contractorId);
+         Client contractorForClient = clientDao.findById(contractorId).orElseThrow(() -> new RuntimeException("client not found"));
+         Contractor contractor = new Contractor(contractorForClient.getFirstName(), contractorForClient.getLastName(),contractorForClient.getPhoneNumber(),clientId,contractorId);
+         clientDao.saveContractor(contractor);
         }
     }
 

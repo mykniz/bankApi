@@ -1,0 +1,78 @@
+[
+  {
+    "firstName": "Leo",
+    "lastName": "Messi",
+    "phoneNumber": "+7(070)-246-3274",
+    "contractorsList": [
+      {
+        "firstName": "John",
+        "lastName": "Smith",
+        "phoneNumber": "+7(712)-305-9426",
+        "clientId": 1,
+        "contractorId": 2
+      }
+    ],
+    "accountList": [
+      {
+        "account": "64419815581464276017",
+        "balance": 1000000.00,
+        "clientId": 1,
+        "cardList": [
+          {
+            "cardNumber": "4994125505622193",
+            "cardType": "CREDIT",
+            "paySystem": "VISA",
+            "accountId": 1,
+            "active": true
+          },
+          {
+            "cardNumber": "9495700472568181",
+            "cardType": "CREDIT",
+            "paySystem": "VISA",
+            "accountId": 1,
+            "active": true
+          }
+        ],
+        "open": true
+      },
+      {
+        "account": "66546345908858348082",
+        "balance": 9999999999.00,
+        "clientId": 1,
+        "cardList": [
+          {
+            "cardNumber": "1032274611722232",
+            "cardType": "CREDIT",
+            "paySystem": "MASTERCARD",
+            "accountId": 2,
+            "active": true
+          }
+        ],
+        "open": true
+      }
+    ]
+  },
+  {
+    "firstName": "John",
+    "lastName": "Smith",
+    "phoneNumber": "+7(712)-305-9426",
+    "contractorsList": [],
+    "accountList": [
+      {
+        "account": "03217462696778617732",
+        "balance": 10.00,
+        "clientId": 2,
+        "cardList": [
+          {
+            "cardNumber": "1772841203002047",
+            "cardType": "DEBET",
+            "paySystem": "MIR",
+            "accountId": 3,
+            "active": true
+          }
+        ],
+        "open": true
+      }
+    ]
+  }
+]

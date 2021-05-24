@@ -11,5 +11,4 @@ CREATE TABLE IF NOT EXISTS CLIENT
 
 insert into CLIENT (first_name, last_name, phone_number) values ('Leo', 'Messi', '+7(070)-246-3274');
 insert into CLIENT (first_name, last_name, phone_number) values ('John', 'Smith', '+7(712)-305-9426');
-insert into CLIENT (first_name, last_name, phone_number) values ('Fleurette', 'Aldins', '+7(064)-014-9187');
-insert into CLIENT (first_name, last_name, phone_number) values ('Lucilia', 'Studdard', '+7(295)-392-7920');
+

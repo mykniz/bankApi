@@ -15,6 +15,5 @@ CREATE TABLE IF NOT EXISTS ACCOUNT
 insert into ACCOUNT (account, balance, is_open, client_id) values ('64419815581464276017', 1000000.00, true, 1);
 insert into ACCOUNT (account, balance, is_open, client_id) values ('66546345908858348082', 9999999999.00, true, 1);
 insert into ACCOUNT (account, balance, is_open, client_id) values ('03217462696778617732', 10.00, true, 2);
-insert into ACCOUNT (account, balance, is_open, client_id) values ('69756317540546747828', 3709.94, true, 3);
-insert into ACCOUNT (account, balance, is_open, client_id) values ('92396319335214821062', 825.03, true, 4);
+
 
