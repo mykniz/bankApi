@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class AuthenticationConfig extends BasicAuthenticator {
 
-    private final static String CREDENTIALS_PATH = "/Users/a19188807/IdeaProjects/BankAPI/src/main/resources/credentials.properties";
+    private final static String CREDENTIALS_PATH = "src/main/resources/credentials.properties"; //todo
 
     /**
      * Creates a BasicAuthenticator for the given HTTP realm

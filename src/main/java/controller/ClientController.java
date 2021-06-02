@@ -25,7 +25,7 @@ public class ClientController implements HttpHandler {
         String method = exchange.getRequestMethod();
         String path = exchange.getRequestURI().getPath();
         switch (method) {
-            case ServerConfig.GET:
+            case ServerConfig.GET:  //todo
 
             case ServerConfig.POST:
                 switch (path) {

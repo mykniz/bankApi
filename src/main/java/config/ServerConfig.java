@@ -15,6 +15,7 @@ import java.util.logging.Logger;
  * basic server configuration
  */
 public class ServerConfig {
+    public static final String ANSI_BLUE = "\u001B[34m";
 
     private static final Logger log = Logger.getLogger(ServerConfig.class.getName());
 
@@ -36,7 +37,7 @@ public class ServerConfig {
      * @param accountService service between http and database for accounts operations
      * @throws IOException
      */
-    public static void startServer(ClientService clientService,
+    public static void startServer(ClientService clientService,               //todo CHECK JSON for request
                                    CardService cardService,
                                    AccountService accountService) throws IOException {
         HttpServer httpServer = HttpServer.create(new InetSocketAddress(PORT), BACKLOG);
@@ -52,7 +53,7 @@ public class ServerConfig {
         httpServer.setExecutor(threadPoolExecutor);
         httpServer.start();
 
-        log.info("Server started on port 8000");
+        log.info(ANSI_BLUE + "Server started on port 8000" + ANSI_BLUE);
         log.info("---------------------------");
     }
 }

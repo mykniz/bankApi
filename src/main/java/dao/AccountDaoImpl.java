@@ -6,6 +6,7 @@ import entity.Card;
 import entity.CardType;
 import entity.PaySystem;
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

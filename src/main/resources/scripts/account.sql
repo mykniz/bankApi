@@ -3,12 +3,11 @@ DROP TABLE IF EXISTS ACCOUNT CASCADE;
 CREATE TABLE IF NOT EXISTS ACCOUNT
 (
     account_id   INTEGER      not null AUTO_INCREMENT,
-    account VARCHAR(255) not null,
+    account VARCHAR(255) UNIQUE not null,
     balance DECIMAL(13,2),
     is_open BOOL,
-    client_id int,
+    client_id int UNIQUE,
     PRIMARY KEY (account_id),
-    UNIQUE (account),
     foreign key (client_id) references CLIENT(client_id)
 );
 

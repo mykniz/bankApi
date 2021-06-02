@@ -36,7 +36,7 @@ class ClientControllerTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        DatabaseConfig.createTables();
+        DatabaseConfig.createTables();             //todo create IN-MEM database
         ClientDao clientDao = new ClientDaoImpl();
         AccountDao accountDao = new AccountDaoImpl();
         CardDao cardDao = new CardDaoImpl();
@@ -50,10 +50,10 @@ class ClientControllerTest {
     void handle() throws IOException {
         String url = "http://localhost:8000/client/addContractor";
         HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-        connection.setRequestProperty("Content-Type”", "application/json");
+        connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
-        connection.connect();
+        connection.connect(); //todo check
 
         String jsonString = "{\"clientId\":\"1\",\"contractorId\":\"2\"}";
         ObjectMapper mapper = new ObjectMapper();
@@ -72,8 +72,7 @@ class ClientControllerTest {
         }
 
         JsonNode responseJson = mapper.readTree(String.valueOf(sb));
-
-        String testResponseString = "[\n" +
+        String testResponseString = "[\n" +                               //todo create object
                 "  {\n" +
                 "    \"firstName\": \"Leo\",\n" +
                 "    \"lastName\": \"Messi\",\n" +

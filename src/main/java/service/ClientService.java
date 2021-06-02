@@ -31,7 +31,7 @@ public class ClientService {
         int clientId = addContractorRequestDto.getClientId();
         int contractorId = addContractorRequestDto.getContractorId();
 
-        if(clientId != contractorId) {
+        if(clientId != contractorId) { //todo
          Client contractorForClient = clientDao.findById(contractorId).orElseThrow(() -> new RuntimeException("client not found"));
          Contractor contractor = new Contractor(contractorForClient.getFirstName(), contractorForClient.getLastName(),contractorForClient.getPhoneNumber(),clientId,contractorId);
          clientDao.saveContractor(contractor);
@@ -42,7 +42,7 @@ public class ClientService {
         String phoneNumber = clientRequestDto.getPhoneNumber();
 
         if(clientDao.findByPhoneNumber(phoneNumber).isPresent()) {
-            log.info("cliet already exists");
+            log.info("client already exists");
         } else {
             String firstName = clientRequestDto.getFirstName();
             String lastName = clientRequestDto.getLastName();
